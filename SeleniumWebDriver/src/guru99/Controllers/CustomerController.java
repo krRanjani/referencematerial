@@ -1,4 +1,4 @@
-package guru99;
+package guru99.Controllers;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeTest;
