@@ -1,19 +1,40 @@
 package guru99.Controllers;
 
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.AfterTest;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+import guru99.DataClasses.NewCustInfo;
+import guru99.Interfaces.IGuruRepository;
 
 public class CustomerController {
-  @Test
-  public void f() {
-  }
-  @BeforeTest
-  public void beforeTest() {
-  }
-
-  @AfterTest
-  public void afterTest() {
-  }
+	
+	int testcaseID;
+	WebDriver driver;
+	IGuruRepository oGuruRepository;
+	NewCustInfo oNewCustInfo;
+	String error;
+	
+	public CustomerController(int iTestcaseID,WebDriver wDriver,IGuruRepository objGuruRepository)
+	{
+		testcaseID = iTestcaseID;
+		driver = wDriver;
+		oGuruRepository = objGuruRepository;
+	}
+	
+	public void addNewCustomer() throws IOException
+	{
+		oNewCustInfo = oGuruRepository.readNewCustInfo(testcaseID, driver);
+		
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.xpath(".//a[@href='addcustomerpage.php']")).click();
+		
+		
+		
+		
+	}
+ 
 
 }
