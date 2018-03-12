@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="20417" started-at="2018-03-12T03:36:04Z" finished-at="2018-03-12T03:36:25Z">
+  <suite name="Default suite" duration-ms="18053" started-at="2018-03-12T17:19:54Z" finished-at="2018-03-12T17:20:12Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="20417" started-at="2018-03-12T03:36:04Z" finished-at="2018-03-12T03:36:25Z">
+    <test name="Default test" duration-ms="18053" started-at="2018-03-12T17:19:54Z" finished-at="2018-03-12T17:20:12Z">
       <class name="guru99.Controllers.MainController">
-        <test-method status="PASS" signature="AddNewCustomer()[pri:0, instance:guru99.Controllers.MainController@58cbafc2]" name="AddNewCustomer" duration-ms="18227" started-at="2018-03-12T03:36:04Z" finished-at="2018-03-12T03:36:23Z">
+        <test-method status="PASS" signature="AddNewCustomer()[pri:0, instance:guru99.Controllers.MainController@58cbafc2]" name="AddNewCustomer" duration-ms="17977" started-at="2018-03-12T17:19:54Z" finished-at="2018-03-12T17:20:12Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- AddNewCustomer -->
-        <test-method status="PASS" signature="Login()[pri:1, instance:guru99.Controllers.MainController@58cbafc2]" name="Login" duration-ms="2" started-at="2018-03-12T03:36:23Z" finished-at="2018-03-12T03:36:23Z">
+        <test-method status="PASS" signature="Login()[pri:1, instance:guru99.Controllers.MainController@58cbafc2]" name="Login" duration-ms="4" started-at="2018-03-12T17:20:12Z" finished-at="2018-03-12T17:20:12Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Login -->
-        <test-method status="PASS" signature="afterTest()[pri:0, instance:guru99.Controllers.MainController@58cbafc2]" name="afterTest" is-config="true" duration-ms="2132" started-at="2018-03-12T03:36:23Z" finished-at="2018-03-12T03:36:25Z">
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:guru99.Controllers.MainController@58cbafc2]" name="afterTest" is-config="true" duration-ms="4" started-at="2018-03-12T17:20:12Z" finished-at="2018-03-12T17:20:12Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterTest -->

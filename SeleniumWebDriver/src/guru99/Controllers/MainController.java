@@ -43,7 +43,7 @@ public class MainController {
   @AfterTest
   public void afterTest() 
   {
-	  driver.close();
+	 // driver.close();
   }
 
 }
