@@ -6,7 +6,6 @@ import guru99.Interfaces.IGuruRepository;
 import guru99.Repository.ExcelRepository;
 
 import java.io.IOException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
@@ -32,12 +31,16 @@ public class MainController {
 	public void AddNewCustomer() throws IOException
 	{
 		int lTestcaseID = 1;
-		int aTestcaseID = 1;
+		int aTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		CustomerController oCustomerController = new CustomerController(aTestcaseID,driver,oGuruRepository);
 		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
 		oLoginController.Login();
-		oCustomerController.addNewCustomer();
+
+		for(aTestcaseID=4;aTestcaseID<6;aTestcaseID++)
+		{
+			CustomerController oCustomerController = new CustomerController(aTestcaseID,driver,oGuruRepository);
+			oCustomerController.addNewCustomer();
+		}
 	}
 
   @AfterTest

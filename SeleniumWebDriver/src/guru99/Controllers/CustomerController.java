@@ -37,11 +37,11 @@ public class CustomerController {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.findElement(By.xpath(".//a[@href='addcustomerpage.php']")).click();
 		driver.findElement(By.name("name")).sendKeys(oNewCustInfo.custname);
-		driver.findElement(By.name("name")).sendKeys(Keys.TAB);//25
+		driver.findElement(By.name("name")).sendKeys(Keys.TAB);
 		String error1 = driver.findElement(By.id("message")).getText();
 		
 		List<WebElement> gen = driver.findElements(By.name("rad1"));
-		for(int i=0;i<=gen.size();i++)
+		for(int i=0;i<gen.size();i++)
 		{
 			if(gen.get(i).getAttribute("value").equalsIgnoreCase(oNewCustInfo.gender))
 				gen.get(i).click();
@@ -52,27 +52,27 @@ public class CustomerController {
 		String error2 = driver.findElement(By.id("message24")).getText();
 		
 		driver.findElement(By.name("addr")).sendKeys(oNewCustInfo.address);
-		driver.findElement(By.name("addr")).sendKeys(Keys.TAB); //50
+		driver.findElement(By.name("addr")).sendKeys(Keys.TAB);
 		String error3 = driver.findElement(By.id("message3")).getText();
 		
 		driver.findElement(By.name("city")).sendKeys(oNewCustInfo.city);
-		driver.findElement(By.name("city")).sendKeys(Keys.TAB);//25
+		driver.findElement(By.name("city")).sendKeys(Keys.TAB);
 		String error4 = driver.findElement(By.id("message4")).getText();
 		
 		driver.findElement(By.name("state")).sendKeys(oNewCustInfo.state);
-		driver.findElement(By.name("state")).sendKeys(Keys.TAB);//25
+		driver.findElement(By.name("state")).sendKeys(Keys.TAB);
 		String error5 = driver.findElement(By.id("message5")).getText();
 		
 		driver.findElement(By.name("pinno")).sendKeys(oNewCustInfo.pin);
-		driver.findElement(By.name("pinno")).sendKeys(Keys.TAB);//6
+		driver.findElement(By.name("pinno")).sendKeys(Keys.TAB);
 		String error6 = driver.findElement(By.id("message6")).getText();
 		
 		driver.findElement(By.name("telephoneno")).sendKeys(oNewCustInfo.mobno);
-		driver.findElement(By.name("telephoneno")).sendKeys(Keys.TAB);//15
+		driver.findElement(By.name("telephoneno")).sendKeys(Keys.TAB);
 		String error7 = driver.findElement(By.id("message7")).getText();
 		
 		driver.findElement(By.name("emailid")).sendKeys(oNewCustInfo.email);
-		driver.findElement(By.name("emailid")).sendKeys(Keys.TAB);//30
+		driver.findElement(By.name("emailid")).sendKeys(Keys.TAB);
 		String error8 = driver.findElement(By.id("message9")).getText();
 		
 		driver.findElement(By.name("password")).sendKeys(oNewCustInfo.password);
@@ -81,7 +81,7 @@ public class CustomerController {
 		
 		error = error1+error2+error3+error4+error5+error6+error7+error8+error9;
 		
-		driver.findElement(By.name("sub")).submit();
+		driver.findElement(By.name("sub")).click();
 		
 		try
 		{
@@ -93,11 +93,18 @@ public class CustomerController {
 			
 			if(error.equalsIgnoreCase(oNewCustInfo.message) && msg.equalsIgnoreCase("please fill all fields"))
 			{
-				oGuruRepository.updateNewCustStatus(testcaseID, "Pass", custid);
+				oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+error, "");
+				alert.accept();
 			}
+			else 
+				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - Message mismatch", "");
 		} catch(Exception e)
 		{
-			
+			String output = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[1]/td/p")).getText();
+			String custid = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[4]/td[2]")).getText();
+			System.out.println(custid+" -"+output);
+				if(output.equalsIgnoreCase("Customer Registered Successfully!!!"))
+					oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+output, custid);
 		}
 	}
 				

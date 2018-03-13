@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -11,7 +13,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
@@ -103,7 +104,7 @@ public class ExcelRepository implements IGuruRepository {
 
 	public NewCustInfo readNewCustInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
-		return readNewCustInfoFromExcel( TestcaseID, Driver);
+		return readNewCustInfoFromExcel(TestcaseID, Driver);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -120,9 +121,11 @@ public class ExcelRepository implements IGuruRepository {
 		
 		oNewCustInfo.custname = sh.getRow(testcaseID).getCell(2).getStringCellValue();
 		oNewCustInfo.gender = sh.getRow(testcaseID).getCell(3).getStringCellValue();
-		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);
-		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-		oNewCustInfo.dob = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		//sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);		
+		Date dtDOB =sh.getRow(testcaseID).getCell(4).getDateCellValue();
+		SimpleDateFormat dt = new SimpleDateFormat("MM/dd/yyyy");
+		oNewCustInfo.dob=  dt.format(dtDOB);
 		oNewCustInfo.address = sh.getRow(testcaseID).getCell(5).getStringCellValue();
 		oNewCustInfo.city = sh.getRow(testcaseID).getCell(6).getStringCellValue() ;
 		oNewCustInfo.state = sh.getRow(testcaseID).getCell(7).getStringCellValue();
@@ -142,18 +145,18 @@ public class ExcelRepository implements IGuruRepository {
 		return oNewCustInfo;
 	}
 
-	public void updateNewCustStatus(int TestcaseID,String status,int custid) throws IOException
+	public void updateNewCustStatus(int TestcaseID,String status,String custid) throws IOException
 	{
 		updateNewCustStatusInExcel(TestcaseID,status,custid);
 	}
 	
-	private void updateNewCustStatusInExcel(int testcaseID,String status,int custid) throws IOException
+	private void updateNewCustStatusInExcel(int testcaseID,String status,String custid) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sh = wb.getSheet("NewCust");
-		XSSFSheet sh1 = wb.getSheet("EditCust");
+		//XSSFSheet sh1 = wb.getSheet("EditCust");
 		CellStyle styleP = wb.createCellStyle();
 		
 	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
@@ -181,8 +184,8 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	
 		int colcount = sh.getRow(testcaseID).getPhysicalNumberOfCells();
-		System.out.println("Column count "+colcount);
-		/*if(colcount>=7)
+		//System.out.println("Column count "+colcount);
+		if(colcount>=15)
 		{
 			sh.getRow(testcaseID).getCell(colcount-1).setCellValue(status);
 			sh.getRow(testcaseID).getCell(colcount-2).setCellValue(custid);
@@ -199,7 +202,7 @@ public class ExcelRepository implements IGuruRepository {
 		}
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
-		wb.close();*/	
+		wb.close();
 	}
 
 }
