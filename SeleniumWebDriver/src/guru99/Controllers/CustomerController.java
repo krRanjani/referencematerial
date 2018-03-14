@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import guru99.DataClasses.DeleteCustInfo;
 import guru99.DataClasses.NewCustInfo;
 import guru99.Interfaces.IGuruRepository;
 
@@ -21,6 +22,7 @@ public class CustomerController {
 	WebDriver driver;
 	IGuruRepository oGuruRepository;
 	NewCustInfo oNewCustInfo;
+	DeleteCustInfo oDeleteCustInfo;
 	String error;
 	
 	public CustomerController(int iTestcaseID,WebDriver wDriver,IGuruRepository objGuruRepository)
@@ -34,7 +36,7 @@ public class CustomerController {
 	{
 		oNewCustInfo = oGuruRepository.readNewCustInfo(testcaseID, driver);
 		
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.findElement(By.xpath(".//a[@href='addcustomerpage.php']")).click();
 		driver.findElement(By.name("name")).sendKeys(oNewCustInfo.custname);
 		driver.findElement(By.name("name")).sendKeys(Keys.TAB);
@@ -90,24 +92,102 @@ public class CustomerController {
 			
 			Alert alert = driver.switchTo().alert();
 			String msg = alert.getText();
+			alert.accept();
 			
-			if(error.equalsIgnoreCase(oNewCustInfo.message) && msg.equalsIgnoreCase("please fill all fields"))
+			if(error.equalsIgnoreCase(oNewCustInfo.message) && msg.equalsIgnoreCase(oNewCustInfo.warn))
 			{
 				oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+error, "");
+				
+			}
+			else if(msg.equalsIgnoreCase(oNewCustInfo.message))
+			{
+				oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+msg, "");
+				//alert.accept();
+			}
+			else if(msg.equalsIgnoreCase(oNewCustInfo.fail))
+			{
+				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - "+msg, "");
 				alert.accept();
 			}
 			else 
 				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - Message mismatch", "");
-		} catch(Exception e)
+		} catch(Exception Ex1)
 		{
 			String output = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[1]/td/p")).getText();
 			String custid = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[4]/td[2]")).getText();
 			System.out.println(custid+" -"+output);
-				if(output.equalsIgnoreCase("Customer Registered Successfully!!!"))
+				if(output.equalsIgnoreCase(oNewCustInfo.message))
 					oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+output, custid);
 		}
 	}
+	
+	public void deleteCustomer() throws IOException
+	{
+		oDeleteCustInfo = oGuruRepository.readDeleteCustInfo(testcaseID, driver);
+
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.findElement(By.xpath(".//a[@href='DeleteCustomerInput.php']")).click();
+		driver.findElement(By.name("cusid")).sendKeys(oDeleteCustInfo.custid);
+		driver.findElement(By.name("cusid")).sendKeys(Keys.TAB);
+		String error1 = driver.findElement(By.id("message14")).getText();
+		
+		error = error1;
+		
+		driver.findElement(By.name("AccSubmit")).click();
+		
+		//String confirmation = "Do you really want to delete this Customer?";
+		try
+		{
+			WebDriverWait wait = new WebDriverWait(driver,10);
+			wait.until(ExpectedConditions.alertIsPresent());
+			
+			Alert alert = driver.switchTo().alert();
+			String confirm = alert.getText();
+			
+			
+			if(error.equalsIgnoreCase(oDeleteCustInfo.message) && confirm.equalsIgnoreCase(oDeleteCustInfo.warn))
+			{
+				alert.accept();
+				oGuruRepository.updateDeleteCustStatus(testcaseID, "Pass - "+error);
 				
+			}
+			else if(confirm.equalsIgnoreCase(oDeleteCustInfo.conf))
+			{
+				alert.accept();
+				
+				WebDriverWait wait1 = new WebDriverWait(driver,5);
+				wait1.until(ExpectedConditions.alertIsPresent());
+				
+				Alert delete = driver.switchTo().alert();
+				String msg = delete.getText();
+				if(msg.equalsIgnoreCase(oDeleteCustInfo.message))
+				{
+					delete.accept();
+					oGuruRepository.updateDeleteCustStatus(testcaseID, "Pass - "+msg);
+
+				}
+				else
+				{
+					delete.accept();
+					oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - "+msg);
+				}
+				
+				
+			}
+			else if(confirm.equalsIgnoreCase(oDeleteCustInfo.fail))
+			{
+				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - "+confirm);
+				alert.accept();
+			}
+			else 
+				
+				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - Message mismatch");
+		} catch(Exception Ex2)
+		{
+			System.out.println("Exception is "+Ex2);
+		}
+		
+	}
 				
 				
 				
