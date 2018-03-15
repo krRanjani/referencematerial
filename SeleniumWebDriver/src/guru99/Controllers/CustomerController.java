@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import guru99.DataClasses.DeleteCustInfo;
+import guru99.DataClasses.EditCustInfo;
 import guru99.DataClasses.NewCustInfo;
 import guru99.Interfaces.IGuruRepository;
 
@@ -22,6 +23,7 @@ public class CustomerController {
 	WebDriver driver;
 	IGuruRepository oGuruRepository;
 	NewCustInfo oNewCustInfo;
+	EditCustInfo oEditCustInfo;
 	DeleteCustInfo oDeleteCustInfo;
 	String error;
 	
@@ -92,22 +94,22 @@ public class CustomerController {
 			
 			Alert alert = driver.switchTo().alert();
 			String msg = alert.getText();
-			alert.accept();
 			
 			if(error.equalsIgnoreCase(oNewCustInfo.message) && msg.equalsIgnoreCase(oNewCustInfo.warn))
 			{
+				alert.accept();
 				oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+error, "");
 				
 			}
 			else if(msg.equalsIgnoreCase(oNewCustInfo.message))
 			{
+				alert.accept();
 				oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+msg, "");
-				//alert.accept();
 			}
 			else if(msg.equalsIgnoreCase(oNewCustInfo.fail))
 			{
-				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - "+msg, "");
 				alert.accept();
+				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - "+msg, "");
 			}
 			else 
 				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - Message mismatch", "");
@@ -118,6 +120,88 @@ public class CustomerController {
 			System.out.println(custid+" -"+output);
 				if(output.equalsIgnoreCase(oNewCustInfo.message))
 					oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+output, custid);
+		}
+	}
+	
+	public void editCustomer() throws IOException
+	{
+		oEditCustInfo = oGuruRepository.readEditCustInfo(testcaseID, driver);
+		
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		driver.findElement(By.xpath(".//a[@href='EditCustomer.php']")).click();
+		driver.findElement(By.name("cusid")).sendKeys(oEditCustInfo.custid);
+		driver.findElement(By.name("cusid")).sendKeys(Keys.TAB);
+		String error1 = driver.findElement(By.id("message14")).getText();
+		error = error1;
+		driver.findElement(By.name("AccSubmit")).click();
+	
+		
+		try
+		{
+			WebDriverWait wait = new WebDriverWait(driver,10);
+			wait.until(ExpectedConditions.alertIsPresent());
+			Alert alert = driver.switchTo().alert();
+			String msg = alert.getText();
+			
+			
+			if(error.equalsIgnoreCase(oEditCustInfo.message) && msg.equalsIgnoreCase(oEditCustInfo.warn))
+			{
+				alert.accept();
+				oGuruRepository.updateEditCustStaus(testcaseID, "Pass - "+error);
+			}
+			else if(msg.equalsIgnoreCase(oEditCustInfo.message))
+			{
+				alert.accept();
+				oGuruRepository.updateEditCustStaus(testcaseID, "Pass - "+msg);
+			}
+			else if(msg.equalsIgnoreCase(oEditCustInfo.fail))
+			{
+				alert.accept();
+				oGuruRepository.updateEditCustStaus(testcaseID, "Fail - "+msg);
+			}
+			else 
+				oGuruRepository.updateEditCustStaus(testcaseID, "Fail - Message mismatch"	);
+		} catch(Exception Ex2)
+		{
+			driver.findElement(By.name("addr")).clear();
+			driver.findElement(By.name("addr")).sendKeys(oEditCustInfo.address);
+			driver.findElement(By.name("city")).clear();
+			driver.findElement(By.name("city")).sendKeys(oEditCustInfo.city);
+			driver.findElement(By.name("state")).clear();
+			driver.findElement(By.name("state")).sendKeys(oEditCustInfo.state);
+			driver.findElement(By.name("pinno")).clear();
+			driver.findElement(By.name("pinno")).sendKeys(oEditCustInfo.pin);
+			driver.findElement(By.name("telephoneno")).clear();
+			driver.findElement(By.name("telephoneno")).sendKeys(oEditCustInfo.mobno);
+			driver.findElement(By.name("emailid")).clear();
+			driver.findElement(By.name("emailid")).sendKeys(oEditCustInfo.email);
+			driver.findElement(By.name("sub")).click();
+			
+			try
+			{
+				WebDriverWait wait2 = new WebDriverWait(driver,10);
+				wait2.until(ExpectedConditions.alertIsPresent());
+				
+				Alert none = driver.switchTo().alert();
+				String msg = none.getText();
+				
+				if(msg.equalsIgnoreCase(oEditCustInfo.message))
+				{
+					none.accept();
+					oGuruRepository.updateEditCustStaus(testcaseID, "Pass - "+msg);
+				}
+				else
+					oGuruRepository.updateEditCustStaus(testcaseID, "Fail - Message mismatch");
+
+			}catch(Exception Ex3)
+			{
+				String output = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[1]/td/p")).getText();
+				String custid = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[4]/td[2]")).getText();
+				System.out.println(custid+" -"+output);
+			
+				if(output.equalsIgnoreCase(oEditCustInfo.message))
+					oGuruRepository.updateEditCustStaus(testcaseID, "Pass - "+output);
+			}
 		}
 	}
 	
@@ -179,9 +263,9 @@ public class CustomerController {
 			else 
 				
 				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - Message mismatch");
-		} catch(Exception Ex2)
+		} catch(Exception Ex4)
 		{
-			System.out.println("Exception is "+Ex2);
+			System.out.println("Exception is "+Ex4);
 		}
 		
 	}

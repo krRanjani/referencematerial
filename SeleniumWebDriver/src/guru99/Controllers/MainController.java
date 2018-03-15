@@ -27,7 +27,7 @@ public class MainController {
 	}
  }*/
 
-@Test(priority=2)
+/*@Test(priority=2)
 	public void AddNewCustomer() throws IOException
 	{
 		int lTestcaseID = 1;
@@ -35,17 +35,33 @@ public class MainController {
 		IGuruRepository oGuruRepository = new ExcelRepository();
 		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
 		oLoginController.Login();
-//14 21 26
-		for(aTestcaseID=1;aTestcaseID<4;aTestcaseID++)
+
+		for(aTestcaseID=1;aTestcaseID<3;aTestcaseID++)
 		{
-			/*if(aTestcaseID==37 ||aTestcaseID==38||aTestcaseID==47||aTestcaseID==48||aTestcaseID==49)
-				continue;*/
+			//if(aTestcaseID==37 ||aTestcaseID==38||aTestcaseID==47||aTestcaseID==48||aTestcaseID==49)
+				//continue;
 			CustomerController oCustomerController = new CustomerController(aTestcaseID,driver,oGuruRepository);
 			oCustomerController.addNewCustomer();
 		}
-	}
+	}*/
 
 @Test(priority=3)
+	public void EditCustomer() throws IOException
+	{
+		int lTestcaseID = 1;
+		int eTestcaseID;
+		IGuruRepository oGuruRepository = new ExcelRepository();
+		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
+		oLoginController.Login();
+		
+		for(eTestcaseID=1;eTestcaseID<10;eTestcaseID++)
+		{
+			CustomerController oCustomerController = new CustomerController(eTestcaseID,driver,oGuruRepository);
+			oCustomerController.editCustomer();
+		}
+	}
+
+@Test(priority=4)
 	public void DeleteCustomer() throws IOException
 	{
 		//int lTestcaseID = 1;
@@ -54,7 +70,7 @@ public class MainController {
 		//LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
 		//oLoginController.Login();
 		
-		for(dTestcaseID=1;dTestcaseID<4;dTestcaseID++)
+		for(dTestcaseID=1;dTestcaseID<2;dTestcaseID++)
 		{
 			CustomerController oCustomerController = new CustomerController(dTestcaseID,driver,oGuruRepository);
 			oCustomerController.deleteCustomer();
