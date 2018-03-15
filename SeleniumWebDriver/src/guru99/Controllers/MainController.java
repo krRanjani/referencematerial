@@ -36,7 +36,7 @@ public class MainController {
 		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
 		oLoginController.Login();
 //14 21 26
-		for(aTestcaseID=1;aTestcaseID<3;aTestcaseID++)
+		for(aTestcaseID=1;aTestcaseID<4;aTestcaseID++)
 		{
 			/*if(aTestcaseID==37 ||aTestcaseID==38||aTestcaseID==47||aTestcaseID==48||aTestcaseID==49)
 				continue;*/
@@ -48,11 +48,11 @@ public class MainController {
 @Test(priority=3)
 	public void DeleteCustomer() throws IOException
 	{
-		int lTestcaseID = 1;
+		//int lTestcaseID = 1;
 		int dTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
-		oLoginController.Login();
+		//LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
+		//oLoginController.Login();
 		
 		for(dTestcaseID=1;dTestcaseID<4;dTestcaseID++)
 		{
@@ -60,6 +60,7 @@ public class MainController {
 			oCustomerController.deleteCustomer();
 
 		}
+		oGuruRepository.deleteCustidsFromExcel();
 		
 	
 	}

@@ -222,22 +222,20 @@ public class ExcelRepository implements IGuruRepository {
 				}
 			
 			if(colcnt>=5 && custid!= null)
-			{
-				 sh2.getRow(testcaseID).getCell(2).getStringCellValue().isEmpty();
-				
-				{
+			{				
 					for(int i=1;i<1000;i++)
 					{
-						boolean check = sh2.getRow(testcaseID).getCell(i).getStringCellValue().isEmpty();
+						boolean check = sh2.getRow(i).getCell(2).getStringCellValue().isEmpty();
 						if(check)
-							sh2.getRow(testcaseID).getCell(i).setCellValue(custid);
-						else
-							break;
+							{
+								System.out.println("Value of i is "+ i);
+								sh2.getRow(i).getCell(2).setCellValue(custid);
+								break;
+							}
 					}
 				}
 					
 			}
-		}
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();
@@ -280,6 +278,7 @@ public class ExcelRepository implements IGuruRepository {
 	}
 	
 	private void updateDeleteCustStatusInExcel(int testcaseID,String status) throws IOException
+
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
@@ -330,6 +329,38 @@ public class ExcelRepository implements IGuruRepository {
 		wb.close();	
 	}
 	
+	public void deleteCustidsFromExcel() throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("DeleteCust");
+		int counter = 0;
+		for(int i=1;i<=17;i++)
+		{
+			if(!sh.getRow(i).getCell(2).getStringCellValue().isEmpty())
+			{
+			sh.getRow(i).getCell(2).setCellValue("");
+			}
+		}
+		for(int j=1;j<=17;j++)
+		{
+			
+			if(sh.getRow(j).getCell(2).getStringCellValue().isEmpty())
+				{
+					counter++;
+					System.out.println("Counter at iteration: "+j+ " is "+counter);
+				}
+		}
+		if(counter==17)
+			System.out.println("All records are deleted");
+		else
+			System.out.println("All records are not deleted");
+		FileOutputStream fos = new FileOutputStream(file);
+		wb.write(fos);
+		wb.close();
+		
+	}
 }
 	
 

@@ -130,12 +130,9 @@ public class CustomerController {
 		driver.findElement(By.name("cusid")).sendKeys(oDeleteCustInfo.custid);
 		driver.findElement(By.name("cusid")).sendKeys(Keys.TAB);
 		String error1 = driver.findElement(By.id("message14")).getText();
-		
 		error = error1;
-		
 		driver.findElement(By.name("AccSubmit")).click();
 		
-		//String confirmation = "Do you really want to delete this Customer?";
 		try
 		{
 			WebDriverWait wait = new WebDriverWait(driver,10);

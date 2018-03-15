@@ -15,5 +15,6 @@ public interface IGuruRepository {
 	public void updateNewCustStatus(int TestcaseID,String status,String custid) throws IOException;	
 	public DeleteCustInfo readDeleteCustInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateDeleteCustStatus(int TestcaseID,String status) throws IOException;
+	public void deleteCustidsFromExcel() throws IOException;
 
 }
