@@ -15,7 +15,7 @@ public class MainController {
 	
 	WebDriver driver = new ChromeDriver();
 
-/*@Test(priority=1)
+@Test(priority=1)
   public void Login() throws IOException 
  {
 	int lTestcaseID;
@@ -25,54 +25,54 @@ public class MainController {
 	LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository); 
 	oLoginController.Login();
 	}
- }*/
-
-/*@Test(priority=2)
+ }
+ 
+ @Test(priority=2)
 	public void AddNewCustomer() throws IOException
 	{
 		int lTestcaseID = 1;
-		int aTestcaseID;
+		int acTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
 		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
 		oLoginController.Login();
 
-		for(aTestcaseID=1;aTestcaseID<3;aTestcaseID++)
+		for(acTestcaseID=11;acTestcaseID<12;acTestcaseID++)
 		{
-			//if(aTestcaseID==37 ||aTestcaseID==38||aTestcaseID==47||aTestcaseID==48||aTestcaseID==49)
+			//if(acTestcaseID==37 ||acTestcaseID==38||acTestcaseID==47||acTestcaseID==48||acTestcaseID==49)
 				//continue;
-			CustomerController oCustomerController = new CustomerController(aTestcaseID,driver,oGuruRepository);
+			CustomerController oCustomerController = new CustomerController(acTestcaseID,driver,oGuruRepository);
 			oCustomerController.addNewCustomer();
 		}
-	}*/
+	}
 
 @Test(priority=3)
 	public void EditCustomer() throws IOException
 	{
 		int lTestcaseID = 1;
-		int eTestcaseID;
+		int ecTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
 		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
 		oLoginController.Login();
 		
-		for(eTestcaseID=1;eTestcaseID<10;eTestcaseID++)
+		for(ecTestcaseID=1;ecTestcaseID<10;ecTestcaseID++)
 		{
-			CustomerController oCustomerController = new CustomerController(eTestcaseID,driver,oGuruRepository);
+			CustomerController oCustomerController = new CustomerController(ecTestcaseID,driver,oGuruRepository);
 			oCustomerController.editCustomer();
 		}
 	}
 
-@Test(priority=4)
+@Test(priority=7)
 	public void DeleteCustomer() throws IOException
 	{
 		//int lTestcaseID = 1;
-		int dTestcaseID;
+		int dcTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
 		//LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
 		//oLoginController.Login();
 		
-		for(dTestcaseID=1;dTestcaseID<2;dTestcaseID++)
+		for(dcTestcaseID=1;dcTestcaseID<2;dcTestcaseID++)
 		{
-			CustomerController oCustomerController = new CustomerController(dTestcaseID,driver,oGuruRepository);
+			CustomerController oCustomerController = new CustomerController(dcTestcaseID,driver,oGuruRepository);
 			oCustomerController.deleteCustomer();
 
 		}
@@ -80,6 +80,42 @@ public class MainController {
 		
 	
 	}
+
+@Test(priority=4)
+	public void AddNewAccount() throws IOException
+	{
+		int lTestcaseID = 1;
+		int eaTestcaseID;
+		IGuruRepository oGuruRepository = new ExcelRepository();
+		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
+		oLoginController.Login();
+		
+		for(eaTestcaseID=1;eaTestcaseID<2;eaTestcaseID++)
+		{
+			AccountController oAccountController = new AccountController(eaTestcaseID,driver,oGuruRepository);
+			oAccountController.addNewAcct();
+		}
+	}
+
+@Test(priority=5)
+	public void DeleteAccount() throws IOException
+	{
+		int lTestcaseID = 1;
+		int daTestcaseID;
+		IGuruRepository oGuruRepository = new ExcelRepository();
+		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
+		oLoginController.Login();
+		
+		for(daTestcaseID=1;daTestcaseID<2;daTestcaseID++)
+		{
+			AccountController oAccountController = new AccountController(daTestcaseID,driver,oGuruRepository);
+			oAccountController.deleteAcct();
+		}
+		
+		oGuruRepository.deleteAcctnumsFromExcel();
+	}
+
+
 
   @AfterTest
   public void afterTest() 
