@@ -22,8 +22,8 @@ public class MainController {
 	for(lTestcaseID=1;lTestcaseID<8;lTestcaseID++)
 	{
 	IGuruRepository oGuruRepository = new ExcelRepository();
-	LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository); 
-	oLoginController.Login();
+	LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository); 
+	oLoginLogoutController.Login();
 	}
  }
  
@@ -33,8 +33,8 @@ public class MainController {
 		int lTestcaseID = 1;
 		int acTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
-		oLoginController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 
 		for(acTestcaseID=11;acTestcaseID<12;acTestcaseID++)
 		{
@@ -51,8 +51,8 @@ public class MainController {
 		int lTestcaseID = 1;
 		int ecTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
-		oLoginController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
 		for(ecTestcaseID=1;ecTestcaseID<10;ecTestcaseID++)
 		{
@@ -67,8 +67,8 @@ public class MainController {
 		//int lTestcaseID = 1;
 		int dcTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
-		//oLoginController.Login();
+		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		//oLoginLogoutController.Login();
 		
 		for(dcTestcaseID=1;dcTestcaseID<2;dcTestcaseID++)
 		{
@@ -87,8 +87,8 @@ public class MainController {
 		int lTestcaseID = 1;
 		int eaTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
-		oLoginController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
 		for(eaTestcaseID=1;eaTestcaseID<2;eaTestcaseID++)
 		{
@@ -103,8 +103,8 @@ public class MainController {
 		int lTestcaseID = 1;
 		int daTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		LoginController oLoginController = new LoginController(lTestcaseID,driver,oGuruRepository);
-		oLoginController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
 		for(daTestcaseID=1;daTestcaseID<2;daTestcaseID++)
 		{
@@ -116,6 +116,15 @@ public class MainController {
 	}
 
 
+@Test
+	public void Logout() throws IOException
+	{
+		int lTestcaseID = 8;
+		IGuruRepository oGuruRepository = new ExcelRepository();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Logout();
+		
+	}
 
   @AfterTest
   public void afterTest() 

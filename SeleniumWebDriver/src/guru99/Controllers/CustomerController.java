@@ -120,6 +120,9 @@ public class CustomerController {
 			System.out.println(custid+" -"+output);
 				if(output.equalsIgnoreCase(oNewCustInfo.message))
 					oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+output, custid);
+				else
+					oGuruRepository.updateNewCustStatus(testcaseID, "Fail - "+Ex1, "");
+
 		}
 	}
 	
@@ -201,6 +204,9 @@ public class CustomerController {
 			
 				if(output.equalsIgnoreCase(oEditCustInfo.message))
 					oGuruRepository.updateEditCustStaus(testcaseID, "Pass - "+output);
+				else
+					oGuruRepository.updateEditCustStaus(testcaseID, "Fail - "+Ex3);
+
 			}
 		}
 	}
@@ -215,6 +221,7 @@ public class CustomerController {
 		driver.findElement(By.name("cusid")).sendKeys(Keys.TAB);
 		String error1 = driver.findElement(By.id("message14")).getText();
 		error = error1;
+		
 		driver.findElement(By.name("AccSubmit")).click();
 		
 		try
@@ -252,8 +259,6 @@ public class CustomerController {
 					delete.accept();
 					oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - "+msg);
 				}
-				
-				
 			}
 			else if(confirm.equalsIgnoreCase(oDeleteCustInfo.fail))
 			{
@@ -261,7 +266,6 @@ public class CustomerController {
 				alert.accept();
 			}
 			else 
-				
 				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - Message mismatch");
 		} catch(Exception Ex4)
 		{

@@ -17,56 +17,61 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
 
+import guru99.DataClasses.BalEnquiryInfo;
+import guru99.DataClasses.BankStatementInfo;
 import guru99.DataClasses.DeleteAcctInfo;
 import guru99.DataClasses.DeleteCustInfo;
+import guru99.DataClasses.DepositInfo;
 import guru99.DataClasses.EditAcctInfo;
 import guru99.DataClasses.EditCustInfo;
-import guru99.DataClasses.LoginInfo;
+import guru99.DataClasses.FundTransferInfo;
+import guru99.DataClasses.LoginLogoutInfo;
 import guru99.DataClasses.NewAcctInfo;
 import guru99.DataClasses.NewCustInfo;
+import guru99.DataClasses.WithdrawalInfo;
 import guru99.Interfaces.IGuruRepository;
 
 public class ExcelRepository implements IGuruRepository {
 	
 	private String filepath = "C:\\Ranj\\git\\selenium-workspace\\referencematerial\\SeleniumWebDriver\\src\\guru99\\DataFiles\\Guru99_testdata.xlsx";
   
-	public LoginInfo readLoginInfo(int TestcaseID,WebDriver Driver) throws IOException
+	public LoginLogoutInfo readLoginInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
 		return readLoginInfoFromExcel( TestcaseID, Driver);
 	}
 	
-	private LoginInfo readLoginInfoFromExcel(int TestcaseID,WebDriver Driver) throws IOException
+	private LoginLogoutInfo readLoginInfoFromExcel(int TestcaseID,WebDriver Driver) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
-		XSSFSheet sh = wb.getSheet("Login");
+		XSSFSheet sh = wb.getSheet("LoginLogout");
 		
 		int testcaseID = TestcaseID;
-		LoginInfo oLoginInfo = new LoginInfo();
+		LoginLogoutInfo oLoginLogoutInfo = new LoginLogoutInfo();
 		
-		oLoginInfo.URL = sh.getRow(testcaseID).getCell(2).getStringCellValue();
-		oLoginInfo.user = sh.getRow(testcaseID).getCell(3).getStringCellValue();
-		oLoginInfo.password = sh.getRow(testcaseID).getCell(4).getStringCellValue();
-		oLoginInfo.message = sh.getRow(testcaseID).getCell(5).getStringCellValue();
+		oLoginLogoutInfo.URL = sh.getRow(testcaseID).getCell(2).getStringCellValue();
+		oLoginLogoutInfo.user = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+		oLoginLogoutInfo.password = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		oLoginLogoutInfo.message = sh.getRow(testcaseID).getCell(5).getStringCellValue();
 		wb.close();
 		
         String result = "Test case number:%d having URL:%s with user:%s , password:%s and message:%s";
-		System.out.println(String.format(result, testcaseID,oLoginInfo.URL,oLoginInfo.user,oLoginInfo.password,oLoginInfo.message));
-		return oLoginInfo;
+		System.out.println(String.format(result, testcaseID,oLoginLogoutInfo.URL,oLoginLogoutInfo.user,oLoginLogoutInfo.password,oLoginLogoutInfo.message));
+		return oLoginLogoutInfo;
 	}
 	
-	public void updateLoginStatus(int TestcaseID,String status) throws IOException
+	public void updateLoginLogoutStatus(int TestcaseID,String status) throws IOException
 	{
-		updateLoginStatusInExcel(TestcaseID,status);
+		updateLoginLogoutStatusInExcel(TestcaseID,status);
 	}
 	
-	private void updateLoginStatusInExcel(int TestcaseID,String status) throws IOException
+	private void updateLoginLogoutStatusInExcel(int TestcaseID,String status) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
-		XSSFSheet sh = wb.getSheet("Login");
+		XSSFSheet sh = wb.getSheet("LoginLogout");
 		CellStyle styleP = wb.createCellStyle();
 		
 	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
@@ -610,6 +615,98 @@ Need to add steps to write into EditAcct and DeleteAcct
 		
 	}
 
+	
+	public EditAcctInfo readEditAcctInfo(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		 return readEditAcctInfoFromExcel(TestcaseID,Driver);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private EditAcctInfo readEditAcctInfoFromExcel(int TestcaseID,WebDriver driver) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("EditAcct");
+		
+		
+		int testcaseID = TestcaseID;
+		EditAcctInfo oEditAcctInfo = new EditAcctInfo();
+		
+		sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);		
+
+		oEditAcctInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
+		oEditAcctInfo.acctType = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+		oEditAcctInfo.message = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		
+		wb.close();
+		
+        String result = "Test case number:%d having %s,%s,%s";
+		System.out.println(String.format(result, testcaseID,oEditAcctInfo.acctnum,oEditAcctInfo.acctType,oEditAcctInfo.message));
+		return oEditAcctInfo;
+	}
+	
+	public void updateEditAcctStaus(int TestcaseID,String status) throws IOException
+	{
+		updateEditAcctStatusInExcel(TestcaseID,status);
+	}
+	
+	private void updateEditAcctStatusInExcel(int TestcaseID,String status) throws IOException
+	{
+		File file  = new File(filepath);
+		FileInputStream fis = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("EditAcct");
+		CellStyle styleP = wb.createCellStyle();
+		
+	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
+	    styleP.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleP.setBorderBottom(BorderStyle.THIN);
+	    styleP.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderLeft(BorderStyle.THIN);
+	    styleP.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderRight(BorderStyle.THIN);
+	    styleP.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderTop(BorderStyle.THIN);
+	    styleP.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	    CellStyle styleF = wb.createCellStyle();
+	    styleF.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+	    styleF.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleF.setBorderBottom(BorderStyle.THIN);
+	    styleF.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderLeft(BorderStyle.THIN);
+	    styleF.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderRight(BorderStyle.THIN);
+	    styleF.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderTop(BorderStyle.THIN);
+	    styleF.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	
+		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
+		//System.out.println("Column count "+colcount);
+		if(colcount>=6)
+		{
+			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
+			if(status.contains("Pass"))
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);
+				}
+			else
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
+				}
+		}
+		FileOutputStream fos = new FileOutputStream(file);
+		wb.write(fos);
+		wb.close();		
+	}
+
 	public DeleteAcctInfo readDeleteAcctInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
 		return readDeleteAcctInfoFromExcel(TestcaseID, Driver);
@@ -729,52 +826,56 @@ Need to add steps to write into EditAcct and DeleteAcct
 					wb.close();				
 	}
 	
-	public EditAcctInfo readEditAcctInfo(int TestcaseID,WebDriver Driver) throws IOException
+	public DepositInfo readDepositInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
-		 return readEditAcctInfoFromExcel(TestcaseID,Driver);
+		return readDepositInfoFromExcel(TestcaseID,Driver);
 	}
 	
 	@SuppressWarnings("deprecation")
-	private EditAcctInfo readEditAcctInfoFromExcel(int TestcaseID,WebDriver driver) throws IOException
+	private DepositInfo readDepositInfoFromExcel(int TestcaseID,WebDriver Driver) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
-		XSSFSheet sh = wb.getSheet("EditAcct");
+		XSSFSheet sh = wb.getSheet("Deposit");
 		
 		
 		int testcaseID = TestcaseID;
-		EditAcctInfo oEditAcctInfo = new EditAcctInfo();
+		DepositInfo oDepositInfo = new DepositInfo();
 		
 		sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);		
+		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+		sh.getRow(testcaseID).getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(5,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+			
+		oDepositInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
+		oDepositInfo.amount = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+		oDepositInfo.description = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		oDepositInfo.message = sh.getRow(testcaseID).getCell(5).getStringCellValue();
 
-		oEditAcctInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
-		oEditAcctInfo.acctType = sh.getRow(testcaseID).getCell(3).getStringCellValue();
-		oEditAcctInfo.message = sh.getRow(testcaseID).getCell(4).getStringCellValue();
-		
 		wb.close();
 		
-        String result = "Test case number:%d having %s,%s,%s";
-		System.out.println(String.format(result, testcaseID,oEditAcctInfo.acctnum,oEditAcctInfo.acctType,oEditAcctInfo.message));
-		return oEditAcctInfo;
+        String result = "Test case number:%d having %s,%s,%s,%s";
+		System.out.println(String.format(result, testcaseID,oDepositInfo.acctnum,oDepositInfo.amount,oDepositInfo.description,oDepositInfo.message));
+		return oDepositInfo;
 	}
 	
-	public void updateEditAcctStaus(int TestcaseID,String status) throws IOException
+	public void updateDepositStatus(int TestcaseID,String status) throws IOException
 	{
-		updateEditAcctStatusInExcel(TestcaseID,status);
+		updateDepositStatusInExcel(TestcaseID,status);
 	}
 	
-	private void updateEditAcctStatusInExcel(int TestcaseID,String status) throws IOException
+	private void updateDepositStatusInExcel(int TestcaseID,String status) throws IOException
+
 	{
-		File file  = new File(filepath);
-		FileInputStream fis = new FileInputStream(file);
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
-		XSSFSheet sh = wb.getSheet("EditAcct");
+		XSSFSheet sh = wb.getSheet("Deposit");
 		CellStyle styleP = wb.createCellStyle();
 		
 	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
@@ -801,9 +902,9 @@ Need to add steps to write into EditAcct and DeleteAcct
 	    styleF.setTopBorderColor(IndexedColors.BLACK.getIndex());
 	    
 	
-		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		//System.out.println("Column count "+colcount);
-		if(colcount>=6)
+	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
+		System.out.println("Column count "+colcount);
+		/*if(colcount>=5)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
 			if(status.contains("Pass"))
@@ -814,12 +915,419 @@ Need to add steps to write into EditAcct and DeleteAcct
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
 				}
-		}
+		}*/
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
-		wb.close();		
+		wb.close();	
 	}
 
+	public WithdrawalInfo readWithdrawalInfo(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		return readWithdrawalInfoFromExcel(TestcaseID,Driver);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private WithdrawalInfo readWithdrawalInfoFromExcel(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("Withdrawal");
+		
+		
+		int testcaseID = TestcaseID;
+		WithdrawalInfo oWithdrawalInfo = new WithdrawalInfo();
+		
+		sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+		sh.getRow(testcaseID).getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(5,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+			
+		oWithdrawalInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
+		oWithdrawalInfo.amount = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+		oWithdrawalInfo.description = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		oWithdrawalInfo.message = sh.getRow(testcaseID).getCell(5).getStringCellValue();
+
+		wb.close();
+		
+        String result = "Test case number:%d having %s,%s,%s,%s";
+		System.out.println(String.format(result, testcaseID,oWithdrawalInfo.acctnum,oWithdrawalInfo.amount,oWithdrawalInfo.description,oWithdrawalInfo.message));
+		return oWithdrawalInfo;
+	}
+	
+	public void updateWithdrawalStatus(int TestcaseID,String status) throws IOException
+	{
+		updateWithdrawalStatusInExcel(TestcaseID,status);
+	}
+	
+	private void updateWithdrawalStatusInExcel(int TestcaseID,String status) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("Withdrawal");
+		CellStyle styleP = wb.createCellStyle();
+		
+	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
+	    styleP.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleP.setBorderBottom(BorderStyle.THIN);
+	    styleP.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderLeft(BorderStyle.THIN);
+	    styleP.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderRight(BorderStyle.THIN);
+	    styleP.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderTop(BorderStyle.THIN);
+	    styleP.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	    CellStyle styleF = wb.createCellStyle();
+	    styleF.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+	    styleF.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleF.setBorderBottom(BorderStyle.THIN);
+	    styleF.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderLeft(BorderStyle.THIN);
+	    styleF.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderRight(BorderStyle.THIN);
+	    styleF.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderTop(BorderStyle.THIN);
+	    styleF.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	
+	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
+		System.out.println("Column count "+colcount);
+		/*if(colcount>=5)
+		{
+			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
+			if(status.contains("Pass"))
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);
+				}
+			else
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
+				}
+		}*/
+		FileOutputStream fos = new FileOutputStream(file);
+		wb.write(fos);
+		wb.close();	
+	}
+
+	public FundTransferInfo readFundTransferInfo(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		return readFundTransferInfoFromExcel(TestcaseID,Driver);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private FundTransferInfo readFundTransferInfoFromExcel(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("FundTransfer");
+		
+		
+		int testcaseID = TestcaseID;
+		FundTransferInfo oFundTransferInfo = new FundTransferInfo();
+		
+		sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+		sh.getRow(testcaseID).getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(5,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+		sh.getRow(testcaseID).getCell(6).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(6,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+			
+		oFundTransferInfo.payersacctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
+		oFundTransferInfo.payeesacctnum = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+		oFundTransferInfo.amount = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		oFundTransferInfo.description = sh.getRow(testcaseID).getCell(5).getStringCellValue();
+		oFundTransferInfo.message = sh.getRow(testcaseID).getCell(6).getStringCellValue();
+
+		wb.close();
+		
+        String result = "Test case number:%d having %s,%s,%s,%s,%s";
+		System.out.println(String.format(result, testcaseID,oFundTransferInfo.payersacctnum,oFundTransferInfo.payeesacctnum,oFundTransferInfo.amount,oFundTransferInfo.description,oFundTransferInfo.message));
+		return oFundTransferInfo;
+	}
+	
+	public void updateFundTransferStatus(int TestcaseID,String status) throws IOException
+	{
+		updateFundTransferStatusInExcel(TestcaseID,status);
+	}
+	
+	private void updateFundTransferStatusInExcel(int TestcaseID,String status) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("FundTransfer");
+		CellStyle styleP = wb.createCellStyle();
+		
+	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
+	    styleP.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleP.setBorderBottom(BorderStyle.THIN);
+	    styleP.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderLeft(BorderStyle.THIN);
+	    styleP.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderRight(BorderStyle.THIN);
+	    styleP.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderTop(BorderStyle.THIN);
+	    styleP.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	    CellStyle styleF = wb.createCellStyle();
+	    styleF.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+	    styleF.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleF.setBorderBottom(BorderStyle.THIN);
+	    styleF.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderLeft(BorderStyle.THIN);
+	    styleF.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderRight(BorderStyle.THIN);
+	    styleF.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderTop(BorderStyle.THIN);
+	    styleF.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	
+	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
+		System.out.println("Column count "+colcount);
+		/*if(colcount>=5)
+		{
+			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
+			if(status.contains("Pass"))
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);
+				}
+			else
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
+				}
+		}*/
+		FileOutputStream fos = new FileOutputStream(file);
+		wb.write(fos);
+		wb.close();	
+	}
+
+	public BalEnquiryInfo readBalEnquiryInfo(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		return readBalEnquiryInfoFromExcel(TestcaseID,Driver);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private BalEnquiryInfo readBalEnquiryInfoFromExcel(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("BalEnquiry");
+		
+		
+		int testcaseID = TestcaseID;
+		BalEnquiryInfo oBalEnquiryInfo = new BalEnquiryInfo();
+		
+		sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+	
+	
+		oBalEnquiryInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
+		oBalEnquiryInfo.message = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+
+		wb.close();
+		
+        String result = "Test case number:%d having %s";
+		System.out.println(String.format(result, testcaseID,oBalEnquiryInfo.acctnum));
+		return oBalEnquiryInfo;
+	}
+	
+	public void updateBalEnquiryStatus(int TestcaseID,String status) throws IOException
+	{
+		updateBalEnquiryStatusInExcel(TestcaseID,status);
+	}
+	
+	private void updateBalEnquiryStatusInExcel(int TestcaseID,String status) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("BalEnquiry");
+		CellStyle styleP = wb.createCellStyle();
+		
+	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
+	    styleP.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleP.setBorderBottom(BorderStyle.THIN);
+	    styleP.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderLeft(BorderStyle.THIN);
+	    styleP.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderRight(BorderStyle.THIN);
+	    styleP.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderTop(BorderStyle.THIN);
+	    styleP.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	    CellStyle styleF = wb.createCellStyle();
+	    styleF.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+	    styleF.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleF.setBorderBottom(BorderStyle.THIN);
+	    styleF.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderLeft(BorderStyle.THIN);
+	    styleF.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderRight(BorderStyle.THIN);
+	    styleF.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderTop(BorderStyle.THIN);
+	    styleF.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	
+	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
+		System.out.println("Column count "+colcount);
+		/*if(colcount>=5)
+		{
+			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
+			if(status.contains("Pass"))
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);
+				}
+			else
+				{
+					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
+				}
+		}*/
+		FileOutputStream fos = new FileOutputStream(file);
+		wb.write(fos);
+		wb.close();	
+	}
+
+	public BankStatementInfo readBankStatementInfo(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		return readBankStatementInfoFromExcel(TestcaseID,Driver);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private BankStatementInfo readBankStatementInfoFromExcel(int TestcaseID,WebDriver Driver) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh1 = wb.getSheet("MiniStat");
+		XSSFSheet sh2 = wb.getSheet("CustStat");
+
+		int testcaseID = TestcaseID;
+		BankStatementInfo oBankStatementInfo = new BankStatementInfo();
+		
+		sh1.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+		sh1.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh1.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+		sh1.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		
+		sh2.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+		sh2.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh2.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+		sh2.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh2.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);
+		sh2.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh2.getRow(testcaseID).getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+		sh2.getRow(testcaseID).getCell(5,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh2.getRow(testcaseID).getCell(6).setCellType(Cell.CELL_TYPE_STRING);
+		sh2.getRow(testcaseID).getCell(6,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh2.getRow(testcaseID).getCell(7).setCellType(Cell.CELL_TYPE_STRING);
+		sh2.getRow(testcaseID).getCell(7,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+	
+		oBankStatementInfo.acctnum1 = sh1.getRow(testcaseID).getCell(2).getStringCellValue();
+		oBankStatementInfo.message1 = sh1.getRow(testcaseID).getCell(3).getStringCellValue();
+
+		oBankStatementInfo.acctnum2 = sh2.getRow(testcaseID).getCell(2).getStringCellValue();
+		oBankStatementInfo.fromdate = sh2.getRow(testcaseID).getCell(3).getStringCellValue();
+		oBankStatementInfo.todate = sh2.getRow(testcaseID).getCell(4).getStringCellValue();
+		oBankStatementInfo.mintransvalue = sh2.getRow(testcaseID).getCell(5).getStringCellValue();
+		oBankStatementInfo.numoftrans = sh2.getRow(testcaseID).getCell(6).getStringCellValue();
+		oBankStatementInfo.message2 = sh2.getRow(testcaseID).getCell(7).getStringCellValue();
+
+		wb.close();
+		
+        String result1 = "Test case number:%d having %s,%s";
+        String result2 = "Test case number:%d having %s,%s,%s,%s,%s,%s";
+
+		System.out.println(String.format(result1, testcaseID,oBankStatementInfo.acctnum1,oBankStatementInfo.message1));
+		System.out.println(String.format(result2, testcaseID,oBankStatementInfo.acctnum2,oBankStatementInfo.fromdate,oBankStatementInfo.todate,oBankStatementInfo.mintransvalue,oBankStatementInfo.numoftrans,oBankStatementInfo.message2));
+
+		return oBankStatementInfo;
+	}
+
+	public void updateBankStatementStatus(int TestcaseID,String status) throws IOException
+	{
+		updateBankStatementStatusInExcel(TestcaseID,status);
+	}
+
+	private void updateBankStatementStatusInExcel(int TestcaseID,String status) throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh1 = wb.getSheet("MiniStat");
+		XSSFSheet sh2 = wb.getSheet("CustStat");
+		CellStyle styleP = wb.createCellStyle();
+		
+	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
+	    styleP.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleP.setBorderBottom(BorderStyle.THIN);
+	    styleP.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderLeft(BorderStyle.THIN);
+	    styleP.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderRight(BorderStyle.THIN);
+	    styleP.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleP.setBorderTop(BorderStyle.THIN);
+	    styleP.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	    CellStyle styleF = wb.createCellStyle();
+	    styleF.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+	    styleF.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    styleF.setBorderBottom(BorderStyle.THIN);
+	    styleF.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderLeft(BorderStyle.THIN);
+	    styleF.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderRight(BorderStyle.THIN);
+	    styleF.setRightBorderColor(IndexedColors.BLACK.getIndex());
+	    styleF.setBorderTop(BorderStyle.THIN);
+	    styleF.setTopBorderColor(IndexedColors.BLACK.getIndex());
+	    
+	
+	    int colcount1 = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
+	    int colcount2 = sh2.getRow(TestcaseID).getPhysicalNumberOfCells();
+
+		System.out.println("Column counts "+colcount1+", "+colcount2);
+		/*if(colcount1>=5)
+		{
+			sh.getRow(TestcaseID).getCell(colcount1-1).setCellValue(status);
+			if(status.contains("Pass"))
+				{
+					sh.getRow(TestcaseID).getCell(colcount1-1).setCellStyle(styleP);
+				}
+			else
+				{
+					sh.getRow(TestcaseID).getCell(colcount1-1).setCellStyle(styleF);
+				}
+		}
+		if(colcount2>=5)
+		{
+			sh.getRow(TestcaseID).getCell(colcount2-1).setCellValue(status);
+			if(status.contains("Pass"))
+				{
+					sh.getRow(TestcaseID).getCell(colcount2-1).setCellStyle(styleP);
+				}
+			else
+				{
+					sh.getRow(TestcaseID).getCell(colcount2-1).setCellStyle(styleF);
+				}
+		}
+		*/
+		FileOutputStream fos = new FileOutputStream(file);
+		wb.write(fos);
+		wb.close();	
+	}
 
 
 }

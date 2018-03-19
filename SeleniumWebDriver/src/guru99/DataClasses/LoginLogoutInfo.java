@@ -1,6 +1,6 @@
 package guru99.DataClasses;
 
-public class LoginInfo {
+public class LoginLogoutInfo {
 
 	public String URL;
 	public String user;
