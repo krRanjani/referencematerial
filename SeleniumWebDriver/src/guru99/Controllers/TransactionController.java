@@ -1,14 +1,12 @@
 package guru99.Controllers;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -72,24 +70,29 @@ public class TransactionController {
 			if(error.equalsIgnoreCase(oDepositInfo.message) && msg.equalsIgnoreCase(oDepositInfo.warn))
 			{
 				alert.accept();
-				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+error);
+				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+error,"");
 				
 			}
 			else if(msg.equalsIgnoreCase(oDepositInfo.message))
 			{
 				alert.accept();
-				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+msg);
+				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+msg,"");
 			}
 			
 			else 
-				oGuruRepository.updateDepositStatus(testcaseID, "Fail - Message mismatch");
+				oGuruRepository.updateDepositStatus(testcaseID, "Fail - Message mismatch","");
 		} catch(Exception Ex1)
 		{
-			String output = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[1]/td/p")).getText();
-			String custid = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[4]/td[2]")).getText();
-			System.out.println(custid+" -"+output);
-				if(output.equalsIgnoreCase(oDepositInfo.message))
-					oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+output);
+			String output = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[1]/td/p")).getText();
+			String currentbal = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[23]/td[2]")).getText();
+			System.out.println(output+" with current balance: "+currentbal);
+				if((output.equalsIgnoreCase(oDepositInfo.message+" "+oDepositInfo.acctnum)) && (oDepositInfo.balBefore+oDepositInfo.amount==currentbal))
+					{
+					oGuruRepository.updateDepositStatus(testcaseID, "Pass",currentbal);
+					System.out.println("Current balance is "+currentbal);
+					}
+				else
+					oGuruRepository.updateDepositStatus(testcaseID, "Fail - "+Ex1,"");
 		}
 	}
 
@@ -106,7 +109,7 @@ public class TransactionController {
 
 	public void balanceEnquiry() throws IOException
 	{
-		BalEnquiryInfo oBalEnquiryInfo = new BalEnquiryInfo();
+		oBalEnquiryInfo = oGuruRepository.readBalEnquiryInfo(testcaseID, driver);
 		
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[12]/a")).click();
@@ -129,24 +132,25 @@ public class TransactionController {
 			if(error.equalsIgnoreCase(oBalEnquiryInfo.message) && msg.equalsIgnoreCase(oBalEnquiryInfo.warn))
 			{
 				alert.accept();
-				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass - "+error);
+				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass - "+error,"");
 			}
 			else if(msg.equalsIgnoreCase(oBalEnquiryInfo.message))
 			{
 				alert.accept();
-				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass - "+msg);	
+				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass - "+msg,"");	
 			}
 			else
-				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - Message mismatch");
+				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - Message mismatch","");
 		}catch(Exception e)
 		{
 			String balmsg = driver.findElement(By.xpath(".//table[@id='balenquiry']/tbody/tr[1]/td/p")).getText();
-			String balance = driver.findElement(By.xpath(".//table[@id='balenquiry']/tbody/tr[4]/td[2]")).getText();
+			String balance = driver.findElement(By.xpath(".//table[@id='balenquiry']/tbody/tr[16]/td[2]")).getText();
+			
 			
 			if(balmsg.equalsIgnoreCase(oBalEnquiryInfo.message+" "+oBalEnquiryInfo.acctnum))
-				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass - "+balmsg+"> "+balance);
+				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass",balance);
 			else
-				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - "+e);
+				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - "+e,"");
 		}
 		
 		

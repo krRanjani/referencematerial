@@ -42,7 +42,7 @@ public interface IGuruRepository {
 	public void deleteAcctnumsFromExcel() throws IOException;
 	
 	public DepositInfo readDepositInfo(int TestcaseID,WebDriver Driver) throws IOException;
-	public void updateDepositStatus(int TestcaseID,String status) throws IOException;
+	public void updateDepositStatus(int TestcaseID,String status,String currentbal) throws IOException;
 
 	public WithdrawalInfo readWithdrawalInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateWithdrawalStatus(int TestcaseID,String status) throws IOException;
@@ -51,7 +51,7 @@ public interface IGuruRepository {
 	public void updateFundTransferStatus(int TestcaseID,String status) throws IOException;
 	
 	public BalEnquiryInfo readBalEnquiryInfo(int TestcaseID,WebDriver Driver) throws IOException;
-	public void updateBalEnquiryStatus(int TestcaseID,String status) throws IOException;
+	public void updateBalEnquiryStatus(int TestcaseID,String status,String balance) throws IOException;
 
 	public BankStatementInfo readBankStatementInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateBankStatementStatus(int TestcaseID,String status) throws IOException;

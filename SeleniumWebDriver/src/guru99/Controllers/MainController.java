@@ -15,7 +15,7 @@ public class MainController {
 	
 	WebDriver driver = new ChromeDriver();
 
-@Test(priority=1)
+/*@Test(priority=1)
   public void Login() throws IOException 
  {
 	int lTestcaseID;
@@ -115,8 +115,41 @@ public class MainController {
 		oGuruRepository.deleteAcctnumsFromExcel();
 	}
 
+@Test(priority=1)
+	public void BalanceEnquiry() throws IOException
+	{
+		int lTestcaseID = 1;
+		int bTestcaseID;
+		IGuruRepository oGuruRepository = new ExcelRepository();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
+		
+		for(bTestcaseID=1;bTestcaseID<9;bTestcaseID++)
+		{
+			TransactionController oTransactionController = new TransactionController(bTestcaseID,driver,oGuruRepository);
+			oTransactionController.balanceEnquiry();
+		}
+		
+	}*/
 
-@Test
+@Test(priority=2)
+	public void deposit() throws IOException
+	{
+		int lTestcaseID = 1;
+		int deTestcaseID;
+		IGuruRepository oGuruRepository = new ExcelRepository();
+		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		//oLoginLogoutController.Login();
+		
+		for(deTestcaseID=1;deTestcaseID<2;deTestcaseID++)
+		{
+			TransactionController oTransactionController = new TransactionController(deTestcaseID,driver,oGuruRepository);
+			oTransactionController.deposit();
+		}
+		
+	}
+
+/*@Test
 	public void Logout() throws IOException
 	{
 		int lTestcaseID = 8;
@@ -124,12 +157,12 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Logout();
 		
-	}
+	}*/
 
   @AfterTest
   public void afterTest() 
   {
-	 // driver.close();
+	 //driver.close();
   }
 
 }

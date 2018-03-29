@@ -1,4 +1,4 @@
-package guru99.Repository;
+	package guru99.Repository;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -615,7 +615,6 @@ Need to add steps to write into EditAcct and DeleteAcct
 		
 	}
 
-	
 	public EditAcctInfo readEditAcctInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
 		 return readEditAcctInfoFromExcel(TestcaseID,Driver);
@@ -842,8 +841,10 @@ Need to add steps to write into EditAcct and DeleteAcct
 		
 		int testcaseID = TestcaseID;
 		DepositInfo oDepositInfo = new DepositInfo();
-		
-		sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+		System.out.println("Test case id:"+testcaseID);
+		String res = sh.getRow(testcaseID).getCell(1).getStringCellValue();
+		System.out.println(res);
+		/*sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -851,25 +852,28 @@ Need to add steps to write into EditAcct and DeleteAcct
 		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
 		sh.getRow(testcaseID).getCell(5).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(5,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
-			
-		oDepositInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
-		oDepositInfo.amount = sh.getRow(testcaseID).getCell(3).getStringCellValue();
-		oDepositInfo.description = sh.getRow(testcaseID).getCell(4).getStringCellValue();
-		oDepositInfo.message = sh.getRow(testcaseID).getCell(5).getStringCellValue();
-
-		wb.close();
+		sh.getRow(testcaseID).getCell(6).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(6,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 		
-        String result = "Test case number:%d having %s,%s,%s,%s";
-		System.out.println(String.format(result, testcaseID,oDepositInfo.acctnum,oDepositInfo.amount,oDepositInfo.description,oDepositInfo.message));
+		oDepositInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
+		oDepositInfo.balBefore = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+		oDepositInfo.amount = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		oDepositInfo.description = sh.getRow(testcaseID).getCell(5).getStringCellValue();
+		oDepositInfo.message = sh.getRow(testcaseID).getCell(6).getStringCellValue();
+
+		wb.close();*/
+		
+        String result = "Test case number:%d having %s,%s,%s,%s,%s";
+		System.out.println(String.format(result, testcaseID,oDepositInfo.acctnum,oDepositInfo.balBefore,oDepositInfo.amount,oDepositInfo.description,oDepositInfo.message));
 		return oDepositInfo;
 	}
 	
-	public void updateDepositStatus(int TestcaseID,String status) throws IOException
+	public void updateDepositStatus(int TestcaseID,String status,String currentbal) throws IOException
 	{
-		updateDepositStatusInExcel(TestcaseID,status);
+		updateDepositStatusInExcel(TestcaseID,status,currentbal);
 	}
 	
-	private void updateDepositStatusInExcel(int TestcaseID,String status) throws IOException
+	private void updateDepositStatusInExcel(int TestcaseID,String status,String currentbal) throws IOException
 
 	{
 		File file = new File(filepath);
@@ -904,9 +908,11 @@ Need to add steps to write into EditAcct and DeleteAcct
 	
 	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
 		System.out.println("Column count "+colcount);
-		/*if(colcount>=5)
+		/*if(colcount>=9)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
+			sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(status);
+
 			if(status.contains("Pass"))
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);
@@ -1125,7 +1131,6 @@ Need to add steps to write into EditAcct and DeleteAcct
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sh = wb.getSheet("BalEnquiry");
 		
-		
 		int testcaseID = TestcaseID;
 		BalEnquiryInfo oBalEnquiryInfo = new BalEnquiryInfo();
 		
@@ -1134,28 +1139,28 @@ Need to add steps to write into EditAcct and DeleteAcct
 		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 	
-	
 		oBalEnquiryInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
 		oBalEnquiryInfo.message = sh.getRow(testcaseID).getCell(3).getStringCellValue();
 
 		wb.close();
 		
-        String result = "Test case number:%d having %s";
-		System.out.println(String.format(result, testcaseID,oBalEnquiryInfo.acctnum));
+        String result = "Test case number:%d having %s and %s";
+		System.out.println(String.format(result, testcaseID,oBalEnquiryInfo.acctnum,oBalEnquiryInfo.message));
 		return oBalEnquiryInfo;
 	}
 	
-	public void updateBalEnquiryStatus(int TestcaseID,String status) throws IOException
+	public void updateBalEnquiryStatus(int TestcaseID,String status,String balance) throws IOException
 	{
-		updateBalEnquiryStatusInExcel(TestcaseID,status);
+		updateBalEnquiryStatusInExcel(TestcaseID,status,balance);
 	}
 	
-	private void updateBalEnquiryStatusInExcel(int TestcaseID,String status) throws IOException
+	private void updateBalEnquiryStatusInExcel(int TestcaseID,String status,String balance) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sh = wb.getSheet("BalEnquiry");
+		XSSFSheet sh1 = wb.getSheet("Deposit");
 		CellStyle styleP = wb.createCellStyle();
 		
 	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
@@ -1183,10 +1188,12 @@ Need to add steps to write into EditAcct and DeleteAcct
 	    
 	
 	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		System.out.println("Column count "+colcount);
-		/*if(colcount>=5)
+	    int colcnt = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
+		//System.out.println("Column count "+colcount);
+		if(colcount>=6)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
+			sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(balance);
 			if(status.contains("Pass"))
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);
@@ -1195,7 +1202,22 @@ Need to add steps to write into EditAcct and DeleteAcct
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
 				}
-		}*/
+		}
+		
+		if(colcnt>=9 && balance!= null)
+		{				
+				for(int i=1;i<1000;i++)
+				{
+					boolean check = sh1.getRow(i).getCell(3).getStringCellValue().isEmpty();
+					if(check)
+						{
+							System.out.println("Value of i is "+ i);
+							sh1.getRow(i).getCell(3).setCellValue(balance);
+							break;
+						}
+				}
+				System.out.println("Deposit sheet updated");
+			}
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();	
