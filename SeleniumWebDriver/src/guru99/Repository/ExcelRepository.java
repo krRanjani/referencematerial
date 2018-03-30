@@ -909,9 +909,11 @@ Need to add steps to write into EditAcct and DeleteAcct
 		if(colcount>=9)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
-			sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(currentbal);
-			sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
-
+			if(Integer.parseInt(currentbal)>=0)
+			{	
+				sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(currentbal);
+				sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
+			}
 
 			if(status.contains("Pass"))
 				{
@@ -1010,9 +1012,11 @@ Need to add steps to write into EditAcct and DeleteAcct
 		if(colcount>=9)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
-			sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(currentbal);
-			sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
-			
+				if(Integer.parseInt(currentbal)>=0)
+			{
+				sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(currentbal);
+				sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
+			}
 			if(status.contains("Pass"))
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);

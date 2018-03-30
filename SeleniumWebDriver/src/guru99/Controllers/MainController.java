@@ -130,10 +130,10 @@ public class MainController {
 			oTransactionController.balanceEnquiry();
 		}
 		
-	}*/
+	}
 
 @Test(priority=2)
-	public void deposit() throws IOException
+	public void Deposit() throws IOException
 	{
 		int lTestcaseID = 1;
 		int deTestcaseID;
@@ -146,9 +146,27 @@ public class MainController {
 			TransactionController oTransactionController = new TransactionController(deTestcaseID,driver,oGuruRepository);
 			oTransactionController.deposit();
 		}
-	}
+	}*/
 
-@Test(priority=3)
+@Test(priority=2)
+public void Withdrawal() throws IOException
+{
+	int lTestcaseID = 1;
+	int wTestcaseID;
+	IGuruRepository oGuruRepository = new ExcelRepository();
+	LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+	oLoginLogoutController.Login();
+	
+	for(wTestcaseID=4;wTestcaseID<5;wTestcaseID++)
+	{
+		if(wTestcaseID==14)
+			continue;
+		TransactionController oTransactionController = new TransactionController(wTestcaseID,driver,oGuruRepository);
+		oTransactionController.withdrawal();
+	}
+}
+
+/*@Test(priority=3)
 	public void Logout() throws IOException
 	{
 		int lTestcaseID = 8;
@@ -156,7 +174,7 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Logout();
 		
-	}
+	}*/
 
   @AfterTest
   public void afterTest() 

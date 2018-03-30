@@ -130,29 +130,36 @@ public class TransactionController {
 			
 			Alert alert = driver.switchTo().alert();
 			String msg = alert.getText();
+			System.out.println("Nonsense"+msg);
 			
 			if(error.equalsIgnoreCase(oWithdrawalInfo.message) && msg.equalsIgnoreCase(oWithdrawalInfo.warn))
 			{
 				alert.accept();
+				System.out.println("First if"+error+msg);
 				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+error,"");
 				
 			}
 			else if(msg.equalsIgnoreCase(oWithdrawalInfo.message))
 			{
 				alert.accept();
+				//System.out.println("Second if"+msg);
 				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+msg,"");
 			}
 			
 			else 
-				oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - Message mismatch","");
+			{
+				alert.accept();
+				//System.out.println("Third if"+msg);
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - "+msg,"");
+			}
 		} catch(Exception Ex2)
 		{
 			String output = driver.findElement(By.xpath(".//table[@id='withdraw']/tbody/tr[1]/td/p")).getText();
-			String currentbal = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[23]/td[2]")).getText();
+			String currentbal = driver.findElement(By.xpath(".//table[@id='withdraw']/tbody/tr[23]/td[2]")).getText();
 			
 			System.out.println(output+" with current balance: "+currentbal);
 			
-			int ans = Integer.parseInt(oWithdrawalInfo.balBefore) + Integer.parseInt(oWithdrawalInfo.amount);
+			int ans = Integer.parseInt(oWithdrawalInfo.balBefore) - Integer.parseInt(oWithdrawalInfo.amount);
 				if((output.equalsIgnoreCase(oWithdrawalInfo.message+" "+oWithdrawalInfo.acctnum)) && (ans==Integer.parseInt(currentbal)))
 					{
 						oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass",currentbal);
