@@ -138,18 +138,17 @@ public class MainController {
 		int lTestcaseID = 1;
 		int deTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		//oLoginLogoutController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
-		for(deTestcaseID=1;deTestcaseID<2;deTestcaseID++)
+		for(deTestcaseID=1;deTestcaseID<3;deTestcaseID++)
 		{
 			TransactionController oTransactionController = new TransactionController(deTestcaseID,driver,oGuruRepository);
 			oTransactionController.deposit();
 		}
-		
 	}
 
-/*@Test
+@Test(priority=3)
 	public void Logout() throws IOException
 	{
 		int lTestcaseID = 8;
@@ -157,7 +156,7 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Logout();
 		
-	}*/
+	}
 
   @AfterTest
   public void afterTest() 

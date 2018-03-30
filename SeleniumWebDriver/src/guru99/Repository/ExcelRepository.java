@@ -841,10 +841,8 @@ Need to add steps to write into EditAcct and DeleteAcct
 		
 		int testcaseID = TestcaseID;
 		DepositInfo oDepositInfo = new DepositInfo();
-		System.out.println("Test case id:"+testcaseID);
-		String res = sh.getRow(testcaseID).getCell(1).getStringCellValue();
-		System.out.println(res);
-		/*sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+
+		sh.getRow(testcaseID).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -861,7 +859,7 @@ Need to add steps to write into EditAcct and DeleteAcct
 		oDepositInfo.description = sh.getRow(testcaseID).getCell(5).getStringCellValue();
 		oDepositInfo.message = sh.getRow(testcaseID).getCell(6).getStringCellValue();
 
-		wb.close();*/
+		wb.close();
 		
         String result = "Test case number:%d having %s,%s,%s,%s,%s";
 		System.out.println(String.format(result, testcaseID,oDepositInfo.acctnum,oDepositInfo.balBefore,oDepositInfo.amount,oDepositInfo.description,oDepositInfo.message));
@@ -908,10 +906,12 @@ Need to add steps to write into EditAcct and DeleteAcct
 	
 	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
 		System.out.println("Column count "+colcount);
-		/*if(colcount>=9)
+		if(colcount>=9)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
-			sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(status);
+			sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(currentbal);
+			sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
+
 
 			if(status.contains("Pass"))
 				{
@@ -921,7 +921,7 @@ Need to add steps to write into EditAcct and DeleteAcct
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
 				}
-		}*/
+		}
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();	
@@ -951,26 +951,29 @@ Need to add steps to write into EditAcct and DeleteAcct
 		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
 		sh.getRow(testcaseID).getCell(5).setCellType(Cell.CELL_TYPE_STRING);
-		sh.getRow(testcaseID).getCell(5,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);	
+		sh.getRow(testcaseID).getCell(5,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+		sh.getRow(testcaseID).getCell(6).setCellType(Cell.CELL_TYPE_STRING);
+		sh.getRow(testcaseID).getCell(6,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 			
 		oWithdrawalInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
-		oWithdrawalInfo.amount = sh.getRow(testcaseID).getCell(3).getStringCellValue();
-		oWithdrawalInfo.description = sh.getRow(testcaseID).getCell(4).getStringCellValue();
-		oWithdrawalInfo.message = sh.getRow(testcaseID).getCell(5).getStringCellValue();
+		oWithdrawalInfo.balBefore = sh.getRow(testcaseID).getCell(3).getStringCellValue();
+		oWithdrawalInfo.amount = sh.getRow(testcaseID).getCell(4).getStringCellValue();
+		oWithdrawalInfo.description = sh.getRow(testcaseID).getCell(5).getStringCellValue();
+		oWithdrawalInfo.message = sh.getRow(testcaseID).getCell(6).getStringCellValue();
 
 		wb.close();
 		
-        String result = "Test case number:%d having %s,%s,%s,%s";
-		System.out.println(String.format(result, testcaseID,oWithdrawalInfo.acctnum,oWithdrawalInfo.amount,oWithdrawalInfo.description,oWithdrawalInfo.message));
+        String result = "Test case number:%d having %s,%s,%s,%s,%s";
+		System.out.println(String.format(result, testcaseID,oWithdrawalInfo.acctnum,oWithdrawalInfo.balBefore,oWithdrawalInfo.amount,oWithdrawalInfo.description,oWithdrawalInfo.message));
 		return oWithdrawalInfo;
 	}
 	
-	public void updateWithdrawalStatus(int TestcaseID,String status) throws IOException
+	public void updateWithdrawalStatus(int TestcaseID,String status,String currentbal) throws IOException
 	{
-		updateWithdrawalStatusInExcel(TestcaseID,status);
+		updateWithdrawalStatusInExcel(TestcaseID,status,currentbal);
 	}
 	
-	private void updateWithdrawalStatusInExcel(int TestcaseID,String status) throws IOException
+	private void updateWithdrawalStatusInExcel(int TestcaseID,String status,String currentbal) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
@@ -1003,10 +1006,13 @@ Need to add steps to write into EditAcct and DeleteAcct
 	    
 	
 	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		System.out.println("Column count "+colcount);
-		/*if(colcount>=5)
+		//System.out.println("Column count "+colcount);
+		if(colcount>=9)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
+			sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(currentbal);
+			sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
+			
 			if(status.contains("Pass"))
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleP);
@@ -1015,7 +1021,7 @@ Need to add steps to write into EditAcct and DeleteAcct
 				{
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
 				}
-		}*/
+		}
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();	

@@ -19,7 +19,6 @@ import guru99.Interfaces.IGuruRepository;
 
 public class TransactionController {
 
-	
 	int testcaseID;
 	WebDriver driver;
 	IGuruRepository oGuruRepository;
@@ -47,8 +46,8 @@ public class TransactionController {
 		driver.findElement(By.name("accountno")).sendKeys(Keys.TAB);
 		String error1 = driver.findElement(By.id("message2")).getText();
 		
-		driver.findElement(By.id("ammount")).sendKeys(oDepositInfo.amount);
-		driver.findElement(By.id("ammount")).sendKeys(Keys.TAB);
+		driver.findElement(By.name("ammount")).sendKeys(oDepositInfo.amount);
+		driver.findElement(By.name("ammount")).sendKeys(Keys.TAB);
 		String error2 = driver.findElement(By.id("message1")).getText();
 		
 		driver.findElement(By.name("desc")).sendKeys(oDepositInfo.description);
@@ -85,25 +84,91 @@ public class TransactionController {
 		{
 			String output = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[1]/td/p")).getText();
 			String currentbal = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[23]/td[2]")).getText();
+			
 			System.out.println(output+" with current balance: "+currentbal);
-				if((output.equalsIgnoreCase(oDepositInfo.message+" "+oDepositInfo.acctnum)) && (oDepositInfo.balBefore+oDepositInfo.amount==currentbal))
+			
+			int ans = Integer.parseInt(oDepositInfo.balBefore) + Integer.parseInt(oDepositInfo.amount);
+				if((output.equalsIgnoreCase(oDepositInfo.message+" "+oDepositInfo.acctnum)) && (ans==Integer.parseInt(currentbal)))
 					{
-					oGuruRepository.updateDepositStatus(testcaseID, "Pass",currentbal);
-					System.out.println("Current balance is "+currentbal);
+						oGuruRepository.updateDepositStatus(testcaseID, "Pass",currentbal);
+					}
+				else if (output.equalsIgnoreCase(oDepositInfo.message+" "+oDepositInfo.acctnum))
+					{
+						oGuruRepository.updateDepositStatus(testcaseID, "Fail - Current balance is not matching the sum of amount and balBefore",currentbal);
 					}
 				else
 					oGuruRepository.updateDepositStatus(testcaseID, "Fail - "+Ex1,"");
 		}
 	}
 
-	public void withdrawal()
+	public void withdrawal() throws IOException
 	{
-		WithdrawalInfo oWithdrawalInfo = new WithdrawalInfo();
+		oWithdrawalInfo = oGuruRepository.readWithdrawalInfo(testcaseID, driver);
+		
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[9]/a")).click();
+		driver.findElement(By.name("accountno")).sendKeys(oWithdrawalInfo.acctnum);
+		driver.findElement(By.name("accountno")).sendKeys(Keys.TAB);
+		String error1 = driver.findElement(By.id("message2")).getText();
+		
+		driver.findElement(By.name("ammount")).sendKeys(oWithdrawalInfo.amount);
+		driver.findElement(By.name("ammount")).sendKeys(Keys.TAB);
+		String error2 = driver.findElement(By.id("message1")).getText();
+		
+		driver.findElement(By.name("desc")).sendKeys(oWithdrawalInfo.description);
+		driver.findElement(By.name("desc")).sendKeys(Keys.TAB);
+		String error3 = driver.findElement(By.id("message17")).getText();
+		
+		error = error1+error2+error3;
+		
+		driver.findElement(By.name("AccSubmit")).click();
+		
+		try
+		{
+			WebDriverWait wait = new WebDriverWait(driver,10);
+			wait.until(ExpectedConditions.alertIsPresent());
+			
+			Alert alert = driver.switchTo().alert();
+			String msg = alert.getText();
+			
+			if(error.equalsIgnoreCase(oWithdrawalInfo.message) && msg.equalsIgnoreCase(oWithdrawalInfo.warn))
+			{
+				alert.accept();
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+error,"");
+				
+			}
+			else if(msg.equalsIgnoreCase(oWithdrawalInfo.message))
+			{
+				alert.accept();
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+msg,"");
+			}
+			
+			else 
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - Message mismatch","");
+		} catch(Exception Ex2)
+		{
+			String output = driver.findElement(By.xpath(".//table[@id='withdraw']/tbody/tr[1]/td/p")).getText();
+			String currentbal = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[23]/td[2]")).getText();
+			
+			System.out.println(output+" with current balance: "+currentbal);
+			
+			int ans = Integer.parseInt(oWithdrawalInfo.balBefore) + Integer.parseInt(oWithdrawalInfo.amount);
+				if((output.equalsIgnoreCase(oWithdrawalInfo.message+" "+oWithdrawalInfo.acctnum)) && (ans==Integer.parseInt(currentbal)))
+					{
+						oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass",currentbal);
+					}
+				else if (output.equalsIgnoreCase(oWithdrawalInfo.message+" "+oWithdrawalInfo.acctnum))
+					{
+						oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - Current balance is not matching the sum of amount and balBefore",currentbal);
+					}
+				else
+					oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - "+Ex2,"");
+		}
 	}
 
-	public void fundTransfer()
+	public void fundTransfer() throws IOException
 	{
-		FundTransferInfo oFundTransferInfo = new FundTransferInfo();
+		oFundTransferInfo = oGuruRepository.readFundTransferInfo(testcaseID, driver);
 		
 	}
 
@@ -156,16 +221,15 @@ public class TransactionController {
 		
 	}
 	
-	public void miniStatement()
+	public void miniStatement() throws IOException
 	{
-		BankStatementInfo oBankStatementInfo = new BankStatementInfo();
-
-	
+		oBankStatementInfo = oGuruRepository.readBankStatementInfo(testcaseID, driver);
 	}
 
-	public void customisedStatement()
+	public void customisedStatement() throws IOException
 	{
-		BankStatementInfo oBankStatementInfo = new BankStatementInfo();
-	}
-
+		 oBankStatementInfo = oGuruRepository.readBankStatementInfo(testcaseID, driver);
+	}							
+				 
+				 
 }
