@@ -112,7 +112,11 @@ public class CustomerController {
 				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - "+msg, "");
 			}
 			else 
-				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - Message mismatch", "");
+			{	
+				alert.accept();
+				oGuruRepository.updateNewCustStatus(testcaseID, "Fail - Message mismatch.."+msg, "");
+
+			}
 		} catch(Exception Ex1)
 		{
 			String output = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[1]/td/p")).getText();
@@ -163,7 +167,10 @@ public class CustomerController {
 				oGuruRepository.updateEditCustStaus(testcaseID, "Fail - "+msg);
 			}
 			else 
-				oGuruRepository.updateEditCustStaus(testcaseID, "Fail - Message mismatch"	);
+			{
+				alert.accept();
+				oGuruRepository.updateEditCustStaus(testcaseID, "Fail - Message mismatch.."+msg);
+			}
 		} catch(Exception Ex2)
 		{
 			driver.findElement(By.name("addr")).clear();
@@ -194,7 +201,11 @@ public class CustomerController {
 					oGuruRepository.updateEditCustStaus(testcaseID, "Pass - "+msg);
 				}
 				else
-					oGuruRepository.updateEditCustStaus(testcaseID, "Fail - Message mismatch");
+				{
+					none.accept();
+					oGuruRepository.updateEditCustStaus(testcaseID, "Fail - Message mismatch.."+msg);
+				}
+					
 
 			}catch(Exception Ex3)
 			{
@@ -262,11 +273,14 @@ public class CustomerController {
 			}
 			else if(confirm.equalsIgnoreCase(oDeleteCustInfo.fail))
 			{
-				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - "+confirm);
 				alert.accept();
+				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - "+confirm);
 			}
 			else 
-				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - Message mismatch");
+			{
+				alert.accept();
+				oGuruRepository.updateDeleteCustStatus(testcaseID, "Fail - Message mismatch.."+confirm);
+			}
 		} catch(Exception Ex4)
 		{
 			System.out.println("Exception is "+Ex4);
@@ -274,4 +288,4 @@ public class CustomerController {
 		
 	}
 					
-	}
+}

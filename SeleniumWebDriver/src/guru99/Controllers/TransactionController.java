@@ -1,6 +1,7 @@
 package guru99.Controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -78,8 +79,11 @@ public class TransactionController {
 				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+msg,"");
 			}
 			
-			else 
-				oGuruRepository.updateDepositStatus(testcaseID, "Fail - Message mismatch","");
+			else
+			{
+				alert.accept();
+				oGuruRepository.updateDepositStatus(testcaseID, "Fail - Message mismatch.."+msg,"");
+			}
 		} catch(Exception Ex1)
 		{
 			String output = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[1]/td/p")).getText();
@@ -150,7 +154,7 @@ public class TransactionController {
 			{
 				alert.accept();
 				//System.out.println("Third if"+msg);
-				oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - "+msg,"");
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - Message Mismatch.."+msg,"");
 			}
 		} catch(Exception Ex2)
 		{
@@ -176,6 +180,72 @@ public class TransactionController {
 	public void fundTransfer() throws IOException
 	{
 		oFundTransferInfo = oGuruRepository.readFundTransferInfo(testcaseID, driver);
+		
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[10]/a")).click();
+		
+		driver.findElement(By.name("payersaccount")).sendKeys(oFundTransferInfo.payersacctnum);
+		driver.findElement(By.name("payersaccount")).sendKeys(Keys.TAB);
+		String error1 = driver.findElement(By.id("message10")).getText();
+		
+		driver.findElement(By.name("payeeaccount")).sendKeys(oFundTransferInfo.payeesacctnum);
+		driver.findElement(By.name("payeeaccount")).sendKeys(Keys.TAB);
+		String error2 = driver.findElement(By.id("message11")).getText();
+
+		driver.findElement(By.name("ammount")).sendKeys(oFundTransferInfo.amount);
+		driver.findElement(By.name("ammount")).sendKeys(Keys.TAB);
+		String error3 = driver.findElement(By.id("message1")).getText();
+		
+		driver.findElement(By.name("desc")).sendKeys(oFundTransferInfo.description);
+		driver.findElement(By.name("desc")).sendKeys(Keys.TAB);
+		String error4 = driver.findElement(By.id("message17")).getText();
+		
+		error = error1+error2+error3+error4;
+		
+		driver.findElement(By.name("AccSubmit")).click();
+		
+		try
+		{
+			WebDriverWait wait = new WebDriverWait(driver,10);
+			wait.until(ExpectedConditions.alertIsPresent());
+			
+			Alert alert = driver.switchTo().alert();
+			String msg = alert.getText();
+			
+			if(error.equalsIgnoreCase(oFundTransferInfo.message) && msg.equalsIgnoreCase(oFundTransferInfo.warn))
+			{
+				alert.accept();
+				System.out.println("First if"+error+msg);
+				oGuruRepository.updateFundTransferStatus(testcaseID, "Pass - "+error);
+				
+			}
+			else if(msg.equalsIgnoreCase(oFundTransferInfo.message))
+			{
+				alert.accept();
+				//System.out.println("Second if"+msg);
+				oGuruRepository.updateFundTransferStatus(testcaseID, "Pass - "+msg);
+			}
+			
+			else 
+			{
+				alert.accept();
+				//System.out.println("Third if"+msg);
+				oGuruRepository.updateFundTransferStatus(testcaseID, "Fail - Message Mismatch.."+msg);
+			}
+		} catch(Exception Ex3)
+		{
+			String output = driver.findElement(By.xpath(".//table[@id='layout']/tbody/tr[1]/td/p")).getText();
+			//String currentbal = driver.findElement(By.xpath(".//table[@id='withdraw']/tbody/tr[23]/td[2]")).getText();
+			
+			System.out.println(output);
+			
+			
+				if(output.equalsIgnoreCase(oFundTransferInfo.message))
+					
+						oGuruRepository.updateFundTransferStatus(testcaseID, "Pass - "+output);	
+				else
+					oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - "+Ex3,"");
+		}
 		
 	}
 
@@ -212,8 +282,11 @@ public class TransactionController {
 				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass - "+msg,"");	
 			}
 			else
-				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - Message mismatch","");
-		}catch(Exception e)
+			{
+				alert.accept();
+				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - Message mismatch.."+msg,"");
+			}
+		}catch(Exception Ex4)
 		{
 			String balmsg = driver.findElement(By.xpath(".//table[@id='balenquiry']/tbody/tr[1]/td/p")).getText();
 			String balance = driver.findElement(By.xpath(".//table[@id='balenquiry']/tbody/tr[16]/td[2]")).getText();
@@ -222,20 +295,128 @@ public class TransactionController {
 			if(balmsg.equalsIgnoreCase(oBalEnquiryInfo.message+" "+oBalEnquiryInfo.acctnum))
 				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass",balance);
 			else
-				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - "+e,"");
+				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - "+Ex4,"");
 		}
-		
 		
 	}
 	
 	public void miniStatement() throws IOException
 	{
 		oBankStatementInfo = oGuruRepository.readBankStatementInfo(testcaseID, driver);
+		
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[13]/a")).click();
+		driver.findElement(By.name("accountno")).sendKeys(oBankStatementInfo.Macctnum);
+		driver.findElement(By.name("accountno")).sendKeys(Keys.TAB);
+		String error1 = driver.findElement(By.id("message2")).getText();
+		
+		error = error1;
+		
+		driver.findElement(By.name("AccSubmit")).click();
+		
+		try
+		{
+			WebDriverWait wait = new WebDriverWait(driver,10);
+			wait.until(ExpectedConditions.alertIsPresent());
+			
+			Alert alert = driver.switchTo().alert();
+			String msg = alert.getText();
+			
+			if(error.equalsIgnoreCase(oBankStatementInfo.Mmessage) && msg.equalsIgnoreCase(oBankStatementInfo.warn))
+			{
+				alert.accept();
+				oGuruRepository.updateBankStatementStatus(testcaseID, "Pass - "+error);
+			}
+			else if(msg.equalsIgnoreCase(oBankStatementInfo.Mmessage))
+			{
+				alert.accept();
+				oGuruRepository.updateBankStatementStatus(testcaseID, "Pass - "+msg);	
+			}
+			else
+			{
+				alert.accept();
+				oGuruRepository.updateBankStatementStatus(testcaseID, "Fail - Message mismatch.."+msg);
+			}
+		}catch(Exception Ex5)
+		{
+			String transmsg = driver.findElement(By.xpath(".//table[@id='layout']/tbody/tr[1]/td/p")).getText();
+			
+			
+			if(transmsg.equalsIgnoreCase(oBankStatementInfo.Mmessage+": "+oBankStatementInfo.Macctnum))
+				oGuruRepository.updateBankStatementStatus(testcaseID, "Pass");
+			else
+				oGuruRepository.updateBankStatementStatus(testcaseID, "Fail - "+Ex5);
+		}	
 	}
 
 	public void customisedStatement() throws IOException
 	{
 		 oBankStatementInfo = oGuruRepository.readBankStatementInfo(testcaseID, driver);
+		 
+		 	driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+			driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[14]/a")).click();
+			
+			driver.findElement(By.name("accountno")).sendKeys(oBankStatementInfo.Cacctnum);
+			driver.findElement(By.name("accountno")).sendKeys(Keys.TAB);
+			String error1 = driver.findElement(By.id("message2")).getText();
+			
+			driver.findElement(By.name("fdate")).sendKeys(oBankStatementInfo.fromdate);
+			driver.findElement(By.name("fdate")).sendKeys(Keys.TAB);
+			String error2 = driver.findElement(By.id("message26")).getText();
+			
+			
+			driver.findElement(By.name("tdate")).sendKeys(oBankStatementInfo.todate);
+			driver.findElement(By.name("tdate")).sendKeys(Keys.TAB);
+			String error3 = driver.findElement(By.id("message27")).getText();
+			
+			driver.findElement(By.name("amountlowerlimit")).sendKeys(oBankStatementInfo.mintransvalue);
+			driver.findElement(By.name("amountlowerlimit")).sendKeys(Keys.TAB);
+			String error4 = driver.findElement(By.id("message12")).getText();
+			
+			driver.findElement(By.name("numtransaction")).sendKeys(oBankStatementInfo.numoftrans);
+			driver.findElement(By.name("numtransaction")).sendKeys(Keys.TAB);
+			String error5 = driver.findElement(By.id("message13")).getText();
+			
+			error = error1+error2+error3+error4+error5;
+			
+			driver.findElement(By.name("AccSubmit")).click();
+			
+			try
+			{
+				WebDriverWait wait = new WebDriverWait(driver,10);
+				wait.until(ExpectedConditions.alertIsPresent());
+				
+				Alert alert = driver.switchTo().alert();
+				String msg = alert.getText();
+				
+				if(error.equalsIgnoreCase(oBankStatementInfo.Cmessage) && msg.equalsIgnoreCase(oBankStatementInfo.warn))
+				{
+					alert.accept();
+					oGuruRepository.updateBankStatementStatus(testcaseID, "Pass - "+error);
+				}
+				else if(msg.equalsIgnoreCase(oBankStatementInfo.Cmessage))
+				{
+					alert.accept();
+					oGuruRepository.updateBankStatementStatus(testcaseID, "Pass - "+msg);	
+				}
+				else
+				{
+					alert.accept();
+					oGuruRepository.updateBankStatementStatus(testcaseID, "Fail - Message mismatch.."+msg);
+				}
+			}catch(Exception Ex6)
+			{
+				String transmsg = driver.findElement(By.xpath(".//table[@id='layout']/tbody/tr[1]/td/p")).getText();
+				
+				SimpleDateFormat sm = new SimpleDateFormat("yyyy-mm-dd");
+				String strDate1 = sm.format(oBankStatementInfo.fromdate);
+				String strDate2 = sm.format(oBankStatementInfo.todate);
+				
+				if(transmsg.equalsIgnoreCase(oBankStatementInfo.Cmessage+": "+oBankStatementInfo.Macctnum+" from Date: "+strDate1+" to: "+strDate2))
+					oGuruRepository.updateBankStatementStatus(testcaseID, "Pass");
+				else
+					oGuruRepository.updateBankStatementStatus(testcaseID, "Fail - "+Ex6);
+			}
 	}							
 				 
 				 

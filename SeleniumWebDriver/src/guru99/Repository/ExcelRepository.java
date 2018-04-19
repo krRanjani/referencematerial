@@ -636,8 +636,8 @@ Need to add steps to write into EditAcct and DeleteAcct
 		sh.getRow(testcaseID).getCell(2,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 		sh.getRow(testcaseID).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
 		sh.getRow(testcaseID).getCell(3,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 		sh.getRow(testcaseID).getCell(4).setCellType(Cell.CELL_TYPE_STRING);		
+		sh.getRow(testcaseID).getCell(4,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 
 		oEditAcctInfo.acctnum = sh.getRow(testcaseID).getCell(2).getStringCellValue();
 		oEditAcctInfo.acctType = sh.getRow(testcaseID).getCell(3).getStringCellValue();
@@ -1268,23 +1268,23 @@ Need to add steps to write into EditAcct and DeleteAcct
 		sh2.getRow(testcaseID).getCell(7).setCellType(Cell.CELL_TYPE_STRING);
 		sh2.getRow(testcaseID).getCell(7,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
 	
-		oBankStatementInfo.acctnum1 = sh1.getRow(testcaseID).getCell(2).getStringCellValue();
-		oBankStatementInfo.message1 = sh1.getRow(testcaseID).getCell(3).getStringCellValue();
+		oBankStatementInfo.Macctnum = sh1.getRow(testcaseID).getCell(2).getStringCellValue();
+		oBankStatementInfo.Mmessage = sh1.getRow(testcaseID).getCell(3).getStringCellValue();
 
-		oBankStatementInfo.acctnum2 = sh2.getRow(testcaseID).getCell(2).getStringCellValue();
+		oBankStatementInfo.Cacctnum = sh2.getRow(testcaseID).getCell(2).getStringCellValue();
 		oBankStatementInfo.fromdate = sh2.getRow(testcaseID).getCell(3).getStringCellValue();
 		oBankStatementInfo.todate = sh2.getRow(testcaseID).getCell(4).getStringCellValue();
 		oBankStatementInfo.mintransvalue = sh2.getRow(testcaseID).getCell(5).getStringCellValue();
 		oBankStatementInfo.numoftrans = sh2.getRow(testcaseID).getCell(6).getStringCellValue();
-		oBankStatementInfo.message2 = sh2.getRow(testcaseID).getCell(7).getStringCellValue();
+		oBankStatementInfo.Cmessage = sh2.getRow(testcaseID).getCell(7).getStringCellValue();
 
 		wb.close();
 		
         String result1 = "Test case number:%d having %s,%s";
         String result2 = "Test case number:%d having %s,%s,%s,%s,%s,%s";
 
-		System.out.println(String.format(result1, testcaseID,oBankStatementInfo.acctnum1,oBankStatementInfo.message1));
-		System.out.println(String.format(result2, testcaseID,oBankStatementInfo.acctnum2,oBankStatementInfo.fromdate,oBankStatementInfo.todate,oBankStatementInfo.mintransvalue,oBankStatementInfo.numoftrans,oBankStatementInfo.message2));
+		System.out.println(String.format(result1, testcaseID,oBankStatementInfo.Macctnum,oBankStatementInfo.Mmessage));
+		System.out.println(String.format(result2, testcaseID,oBankStatementInfo.Cacctnum,oBankStatementInfo.fromdate,oBankStatementInfo.todate,oBankStatementInfo.mintransvalue,oBankStatementInfo.numoftrans,oBankStatementInfo.Cmessage));
 
 		return oBankStatementInfo;
 	}

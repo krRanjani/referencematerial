@@ -4,7 +4,6 @@ public class EditAcctInfo {
 	
 	public String acctnum;
 	public String acctType;
-	public String balance;
 	public String message;
 	//Account details updated Successfully!!!
 	//No Changes made to Account records
