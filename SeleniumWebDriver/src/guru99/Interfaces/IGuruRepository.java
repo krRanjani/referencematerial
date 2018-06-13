@@ -1,5 +1,7 @@
 package guru99.Interfaces;
 
+//This is a programming structure/syntax that allows the computer to enforce certain properties of an object(class).
+//Interface is a description of the actions that an object can do.
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 

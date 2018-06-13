@@ -11,13 +11,14 @@ public class Sampleguru {
 	public static void main(String[] args)
 	{
 		WebDriver driver = new ChromeDriver();
-		driver.get("http://demo.guru99.com/v4/");
-		driver.findElement(By.name("uid")).sendKeys("mngr128501");
+		driver.get("http://demo.guru99.com/V5/");
+		driver.manage().window().maximize();
+		driver.findElement(By.name("uid")).sendKeys("mngr137461");
 		driver.findElement(By.name("password")).sendKeys("Guru@2018");
 		driver.findElement(By.name("btnLogin")).click();
 		
 		
-		for(int i=1;i<2;i++)
+		/*for(int i=1;i<2;i++)
 		{
 			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 			driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[8]/a")).click();
@@ -30,7 +31,7 @@ public class Sampleguru {
 			String currentbal = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[23]/td[2]")).getText();
 	
 			System.out.println("Current balance for run :"+i+" is "+currentbal);
-		}
+		}*/
 	}
 }
 

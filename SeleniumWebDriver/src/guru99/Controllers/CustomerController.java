@@ -119,8 +119,10 @@ public class CustomerController {
 			}
 		} catch(Exception Ex1)
 		{
-			String output = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[1]/td/p")).getText();
-			String custid = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[4]/td[2]")).getText();
+			String output = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+					//.//table[@id='customer']/tbody/tr[1]/td/p"
+			String custid = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]")).getText();
+					//.//table[@id='customer']/tbody/tr[4]/td[2]"
 			System.out.println(custid+" -"+output);
 				if(output.equalsIgnoreCase(oNewCustInfo.message))
 					oGuruRepository.updateNewCustStatus(testcaseID, "Pass - "+output, custid);
@@ -179,12 +181,12 @@ public class CustomerController {
 			driver.findElement(By.name("city")).sendKeys(oEditCustInfo.city);
 			driver.findElement(By.name("state")).clear();
 			driver.findElement(By.name("state")).sendKeys(oEditCustInfo.state);
-			driver.findElement(By.name("pinno")).clear();
-			driver.findElement(By.name("pinno")).sendKeys(oEditCustInfo.pin);
-			driver.findElement(By.name("telephoneno")).clear();
-			driver.findElement(By.name("telephoneno")).sendKeys(oEditCustInfo.mobno);
-			driver.findElement(By.name("emailid")).clear();
-			driver.findElement(By.name("emailid")).sendKeys(oEditCustInfo.email);
+			driver.findElement(By.name("pin")).clear();
+			driver.findElement(By.name("pin")).sendKeys(oEditCustInfo.pin);
+			driver.findElement(By.name("tel")).clear();
+			driver.findElement(By.name("tel")).sendKeys(oEditCustInfo.mobno);
+			driver.findElement(By.name("email")).clear();
+			driver.findElement(By.name("email")).sendKeys(oEditCustInfo.email);
 			driver.findElement(By.name("sub")).click();
 			
 			try
@@ -209,8 +211,11 @@ public class CustomerController {
 
 			}catch(Exception Ex3)
 			{
-				String output = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[1]/td/p")).getText();
-				String custid = driver.findElement(By.xpath(".//table[@id='customer']/tbody/tr[4]/td[2]")).getText();
+				String output = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+				//.//table[@id='customer']/tbody/tr[1]/td/p"
+				String custid = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]")).getText();
+				//.//table[@id='customer']/tbody/tr[4]/td[2]"
+			
 				System.out.println(custid+" -"+output);
 			
 				if(output.equalsIgnoreCase(oEditCustInfo.message))

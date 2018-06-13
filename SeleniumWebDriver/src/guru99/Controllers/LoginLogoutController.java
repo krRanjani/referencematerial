@@ -54,7 +54,7 @@ public class LoginLogoutController {
 			String msg = alert.getText();
 			alert.accept();
 
-			if(error.equalsIgnoreCase(oLoginLogoutInfo.message) && msg.equalsIgnoreCase("User or Password is not valid"))
+			if(error.equalsIgnoreCase(oLoginLogoutInfo.message) && msg.equalsIgnoreCase(oLoginLogoutInfo.message))
 			{
 				oGuruRepository.updateLoginLogoutStatus(testcaseID, "Pass - "+oLoginLogoutInfo.message);
 			}
@@ -86,9 +86,7 @@ public class LoginLogoutController {
 	}
   
 	public void Logout() throws IOException
-	{
-		oLoginLogoutInfo = oGuruRepository.readLoginInfo(testcaseID, driver);
-		
+	{		
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.findElement(By.xpath(".//a[@href='Logout.php']")).click();
 		

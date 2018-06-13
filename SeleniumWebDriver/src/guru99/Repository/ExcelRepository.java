@@ -1,5 +1,6 @@
-	package guru99.Repository;
+package guru99.Repository;
 
+//This is for reading the inputs from excel and writing the test results into excel for all the functions
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +34,7 @@ import guru99.Interfaces.IGuruRepository;
 
 public class ExcelRepository implements IGuruRepository {
 	
-	private String filepath = "C:\\Ranj\\git\\selenium-workspace\\referencematerial\\SeleniumWebDriver\\src\\guru99\\DataFiles\\Guru99_testdata.xlsx";
+	private String filepath = "F:\\Eclipse-workspace\\referencematerial\\SeleniumWebDriver\\src\\guru99\\DataFiles\\\\Guru99_testdata.xlsx";
   
 	public LoginLogoutInfo readLoginInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
@@ -233,6 +234,7 @@ public class ExcelRepository implements IGuruRepository {
 					sh.getRow(TestcaseID).getCell(colcount-2).setCellStyle(styleF);
 				}
 			
+			//Updating the EditCust sheet with newly created customer ids
 			if(colmcnt>=11 && TestcaseID==1)
 			{
 				for(int i=1;i<=8;i++)
@@ -240,6 +242,7 @@ public class ExcelRepository implements IGuruRepository {
 			}
 			System.out.println("EditCust sheet updated");
 			
+			//Updating the EditCust sheet with newly created customer ids
 			if(colcnt>=5 && custid!= null)
 			{				
 					for(int i=1;i<1000;i++)
@@ -247,7 +250,7 @@ public class ExcelRepository implements IGuruRepository {
 						boolean check = sh2.getRow(i).getCell(2).getStringCellValue().isEmpty();
 						if(check)
 							{
-								System.out.println("Value of i is "+ i);
+								//System.out.println("Value of i is "+ i);
 								sh2.getRow(i).getCell(2).setCellValue(custid);
 								break;
 							}
@@ -436,7 +439,7 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	
 		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		System.out.println("Column count "+colcount);
+		//System.out.println("Column count "+colcount);
 		if(colcount>=5)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
@@ -461,6 +464,7 @@ public class ExcelRepository implements IGuruRepository {
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sh = wb.getSheet("DeleteCust");
 		int counter = 0;
+		
 		for(int i=1;i<=17;i++)
 		{
 			if(!sh.getRow(i).getCell(2).getStringCellValue().isEmpty())

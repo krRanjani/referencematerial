@@ -1,4 +1,5 @@
 package guru99.DataClasses;
+//It has the declaration and initialization of the variables used in the class.
 
 public class EditCustInfo {
 	
@@ -10,7 +11,7 @@ public class EditCustInfo {
 	public String mobno;
 	public String email;
 	public String message;
-	public String warn= "please fill all fields";
+	public String warn= "Please fill all mandotary fields";
 	public String fail = "could not be updated!!";
 
 

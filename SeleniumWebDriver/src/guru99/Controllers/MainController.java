@@ -27,7 +27,7 @@ public class MainController {
 	}
  }*/
  
- @Test(priority=2)
+	/* @Test(priority=2)
 	public void AddNewCustomer() throws IOException
 	{
 		int lTestcaseID = 1;
@@ -38,8 +38,6 @@ public class MainController {
 
 		for(acTestcaseID=1;acTestcaseID<2;acTestcaseID++)
 		{
-			//if(acTestcaseID==37 ||acTestcaseID==38||acTestcaseID==47||acTestcaseID==48||acTestcaseID==49)
-				//continue;
 			CustomerController oCustomerController = new CustomerController(acTestcaseID,driver,oGuruRepository);
 			oCustomerController.addNewCustomer();
 		}
@@ -48,39 +46,46 @@ public class MainController {
 @Test(priority=3)
 	public void EditCustomer() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when EditCustomer function is executed alone
 		//int lTestcaseID = 1;
 		int ecTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
 		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		//oLoginLogoutController.Login();
+
 		
-		for(ecTestcaseID=1;ecTestcaseID<2;ecTestcaseID++)
+		for(ecTestcaseID=1;ecTestcaseID<16;ecTestcaseID++)
 		{
 			CustomerController oCustomerController = new CustomerController(ecTestcaseID,driver,oGuruRepository);
 			oCustomerController.editCustomer();
 		}
 	}
-
+*/
 @Test(priority=13)
 	public void DeleteCustomer() throws IOException
 	{
-		//int lTestcaseID = 1;
+		//Line numbers 1,4 and 5 are to be uncommented when DeleteCustomer function is executed alone
+		int lTestcaseID = 1;
 		int dcTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		//oLoginLogoutController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
-		for(dcTestcaseID=1;dcTestcaseID<2;dcTestcaseID++)
+		for(dcTestcaseID=25;dcTestcaseID<26;dcTestcaseID++)
+			
 		{
+			if (dcTestcaseID==25)
+					break;
 			CustomerController oCustomerController = new CustomerController(dcTestcaseID,driver,oGuruRepository);
 			oCustomerController.deleteCustomer();
 		}
 		oGuruRepository.deleteCustidsFromExcel();
 	}
-
+/*
 @Test(priority=4)
 	public void AddNewAccount() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when AddNewAccount function is executed alone
 		//int lTestcaseID = 1;
 		int aaTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
@@ -98,6 +103,7 @@ public class MainController {
 @Test(priority=5)
 	public void EditAccount() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when EditAccount function is executed alone
 		//int lTestcaseID = 1;
 		int eaTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
@@ -108,18 +114,18 @@ public class MainController {
 		{
 			AccountController oAccountController = new AccountController(eaTestcaseID,driver,oGuruRepository);
 			oAccountController.editAcct();
-		}
-		
+		}	
 	}
 
 @Test(priority=12)
 	public void DeleteAccount() throws IOException
 	{
-		int lTestcaseID = 1;
+		//Line numbers 1,4 and 5 are to be uncommented when DeleteAccount function is executed alone
+		//int lTestcaseID = 1;
 		int daTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		oLoginLogoutController.Login();
+		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		//oLoginLogoutController.Login();
 		
 		for(daTestcaseID=1;daTestcaseID<2;daTestcaseID++)
 		{
@@ -133,6 +139,7 @@ public class MainController {
 @Test(priority=7)
 	public void BalanceEnquiry() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when BalanceEnquiry function is executed alone
 		//int lTestcaseID = 1;
 		int bTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
@@ -144,12 +151,12 @@ public class MainController {
 			TransactionController oTransactionController = new TransactionController(bTestcaseID,driver,oGuruRepository);
 			oTransactionController.balanceEnquiry();
 		}
-		
 	}
 
 @Test(priority=6)
 	public void Deposit() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when Deposit function is executed alone
 		//int lTestcaseID = 1;
 		int deTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
@@ -166,6 +173,7 @@ public class MainController {
 @Test(priority=8)
 	public void Withdrawal() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when Withdrawal function is executed alone
 		//int lTestcaseID = 1;
 		int wTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
@@ -184,6 +192,7 @@ public class MainController {
 @Test(priority=9)
 	public void FundTransfer() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when FundTransfer function is executed alone
 		//int lTestcaseID = 1;
 		int fTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
@@ -200,6 +209,7 @@ public class MainController {
 @Test(priority=10)
 	public void MiniStatement() throws IOException
 	{
+		//Line numbers 1,4 and 5 are to be uncommented when MiniStatement function is executed alone
 		//int lTestcaseID = 1;
 		int mTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
@@ -214,21 +224,22 @@ public class MainController {
 	}
 
 @Test(priority=11)
-public void CustomizedStatement() throws IOException
-{
-	//int lTestcaseID = 1;
-	int cTestcaseID;
-	IGuruRepository oGuruRepository = new ExcelRepository();
-	//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-	//oLoginLogoutController.Login();
-	
-	for(cTestcaseID=1;cTestcaseID<2;cTestcaseID++)
+	public void CustomizedStatement() throws IOException
 	{
-		TransactionController oTransactionController = new TransactionController(cTestcaseID,driver,oGuruRepository);
-		oTransactionController.customisedStatement();
+		//Line numbers 1,4 and 5 are to be uncommented when CustomizedStatement function is executed alone
+		//int lTestcaseID = 1;
+		int cTestcaseID;
+		IGuruRepository oGuruRepository = new ExcelRepository();
+		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		//oLoginLogoutController.Login();
 		
+		for(cTestcaseID=1;cTestcaseID<2;cTestcaseID++)
+		{
+			TransactionController oTransactionController = new TransactionController(cTestcaseID,driver,oGuruRepository);
+			oTransactionController.customisedStatement();
+			
+		}
 	}
-}
 
 @Test(priority=14)
 	public void Logout() throws IOException
@@ -236,14 +247,15 @@ public void CustomizedStatement() throws IOException
 		int lTestcaseID = 8;
 		IGuruRepository oGuruRepository = new ExcelRepository();
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		//oLoginLogoutController.Login(); This needs to be uncommented when only Login and Logout functions are executed
 		oLoginLogoutController.Logout();
-		
 	}
 
-  @AfterTest
+@AfterTest
   public void afterTest() 
   {
 	 //driver.close();
   }
+*/
 
 }
