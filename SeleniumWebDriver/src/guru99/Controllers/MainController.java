@@ -60,7 +60,7 @@ public class MainController {
 			oCustomerController.editCustomer();
 		}
 	}
-*/
+
 @Test(priority=13)
 	public void DeleteCustomer() throws IOException
 	{
@@ -71,35 +71,36 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(dcTestcaseID=25;dcTestcaseID<26;dcTestcaseID++)
+		for(dcTestcaseID=1;dcTestcaseID<27;dcTestcaseID++)
 			
 		{
-			if (dcTestcaseID==25)
-					break;
 			CustomerController oCustomerController = new CustomerController(dcTestcaseID,driver,oGuruRepository);
 			oCustomerController.deleteCustomer();
 		}
 		oGuruRepository.deleteCustidsFromExcel();
 	}
-/*
+*/
 @Test(priority=4)
 	public void AddNewAccount() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when AddNewAccount function is executed alone
-		//int lTestcaseID = 1;
+		int lTestcaseID = 1;
 		int aaTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		//oLoginLogoutController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
-		for(aaTestcaseID=1;aaTestcaseID<2;aaTestcaseID++)
+		//for(aaTestcaseID=2;aaTestcaseID<27;aaTestcaseID++)
+		for(aaTestcaseID=23;aaTestcaseID<25;aaTestcaseID++)
 		{
+			/*if(aaTestcaseID==1||aaTestcaseID==2||aaTestcaseID==3||aaTestcaseID==4||aaTestcaseID==5||aaTestcaseID==6||aaTestcaseID==12||aaTestcaseID==18||aaTestcaseID==19||aaTestcaseID==20)
+				continue;*/
 			AccountController oAccountController = new AccountController(aaTestcaseID,driver,oGuruRepository);
 			oAccountController.addNewAcct();
 		}
 	}
 
-
+/*
 @Test(priority=5)
 	public void EditAccount() throws IOException
 	{

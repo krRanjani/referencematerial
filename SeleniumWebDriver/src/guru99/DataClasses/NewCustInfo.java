@@ -14,6 +14,6 @@ public class NewCustInfo {
 	public String email;
 	public String password;
 	public String message;
-	public String warn= "please fill all fields";
+	public String warn= "please fill all mandotary(*) fields";
 	public String fail = "Customer could not be added !!";
 }

@@ -94,8 +94,10 @@ public class AccountController {
 		}catch (Exception Ex1)
 		
 		{
-			String output = driver.findElement(By.xpath(".//table[@id='account']/tbody/tr[1]/td/p")).getText();
-			String acctnum = driver.findElement(By.xpath(".//table[@id='account']/tbody/tr[4]/td[2]")).getText();
+			String output = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+			//.//table[@id='account']/tbody/tr[1]/td/p"
+			String acctnum = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]")).getText();
+			//.//table[@id='account']/tbody/tr[4]/td[2]
 			System.out.println(output+" for customer id: "+oNewAcctInfo.custid+" with account number - "+acctnum);
 				if(output.equalsIgnoreCase(oNewAcctInfo.message))
 					oGuruRepository.updateNewAcctStatus(testcaseID, "Pass - "+output, acctnum);

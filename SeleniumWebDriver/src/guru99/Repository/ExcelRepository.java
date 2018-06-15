@@ -539,7 +539,7 @@ public class ExcelRepository implements IGuruRepository {
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sh = wb.getSheet("NewAcct");
-		//XSSFSheet sh1 = wb.getSheet("EditCust");
+		//XSSFSheet sh1 = wb.getSheet("EditAcct");
 		XSSFSheet sh2 = wb.getSheet("DeleteAcct");
 		CellStyle styleP = wb.createCellStyle();
 		
@@ -568,10 +568,12 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	
 		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
+		System.out.println("Column count in add sheet "+colcount);
+
 		//int colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
-		int colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells();
-		
-		//System.out.println("Column count "+colcount);
+		int colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells(); //Getting null pointer exception here while writing into NewAcct excel for row no:22
+		System.out.println("Column count in Delete sheet "+colcnt);
+
 		
 		if(colcount>=8)
 		{
@@ -589,7 +591,8 @@ public class ExcelRepository implements IGuruRepository {
 				}
 			
 			/*
-Need to add steps to write into EditAcct and DeleteAcct
+Need to add steps to write into EditAcct
+	//Updating the EditAcct sheet with newly created account ids
 			 * if(colmcnt>=11 && TestcaseID==1)
 			{
 				for(int i=1;i<=8;i++)
@@ -597,19 +600,31 @@ Need to add steps to write into EditAcct and DeleteAcct
 			}
 			System.out.println("EditCust sheet updated");
 			*/
+			
+			//Updating the DeleteAcct sheet with newly created account ids
 			if(colcnt>=5 && acctnum!= null)
 			{				
-					for(int i=1;i<1000;i++)
+				int loopcounter=0;	
+				for(int i=1;i<1000;i++)
 					{
 						boolean check = sh2.getRow(i).getCell(2).getStringCellValue().isEmpty();
 						if(check)
 							{
+								
 								System.out.println("Value of i is "+ i);
 								sh2.getRow(i).getCell(2).setCellValue(acctnum);
+								loopcounter++;
 								break;
 							}
 					}
-					System.out.println("DeleteAcct sheet updated");
+					if(loopcounter>0)
+					{
+						System.out.println("DeleteAcct sheet updated");
+						System.out.println("Loop counter --"+loopcounter);
+					}
+					
+					else
+						System.out.println("No need to update DeleteAcct sheet");
 				}
 					
 			}
