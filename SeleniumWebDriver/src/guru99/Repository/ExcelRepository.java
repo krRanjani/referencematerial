@@ -214,10 +214,19 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	
 		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		int colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
-		int colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells();
 		
-		//System.out.println("Column count "+colcount);
+		int colmcnt,colcnt;
+		if(TestcaseID<=15)
+			colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
+		else
+			colmcnt=0;
+		
+		if(TestcaseID<=26)
+			colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells();
+		else
+			colcnt=0;
+		
+		//System.out.println("Column count in New sheet: "+colcount, Column count in Edit sheet: "+colmcnt+" and Delete sheet: "+colcnt);
 		
 		if(colcount>=15)
 		{
@@ -242,7 +251,7 @@ public class ExcelRepository implements IGuruRepository {
 			}
 			System.out.println("EditCust sheet updated");
 			
-			//Updating the EditCust sheet with newly created customer ids
+			//Updating the DeleteCust sheet with newly created customer ids
 			if(colcnt>=5 && custid!= null)
 			{				
 					for(int i=1;i<1000;i++)
@@ -533,13 +542,14 @@ public class ExcelRepository implements IGuruRepository {
 		updateNewAcctStatusInExcel(TestcaseID,status,acctnum);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void updateNewAcctStatusInExcel(int TestcaseID,String status,String acctnum) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sh = wb.getSheet("NewAcct");
-		//XSSFSheet sh1 = wb.getSheet("EditAcct");
+		XSSFSheet sh1 = wb.getSheet("EditAcct");
 		XSSFSheet sh2 = wb.getSheet("DeleteAcct");
 		CellStyle styleP = wb.createCellStyle();
 		
@@ -568,11 +578,20 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	
 		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		System.out.println("Column count in add sheet "+colcount);
-
-		//int colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
-		int colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells(); //Getting null pointer exception here while writing into NewAcct excel for row no:22
-		System.out.println("Column count in Delete sheet "+colcnt);
+		
+		int colmcnt,colcnt;
+		if(TestcaseID<=12)
+			colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
+		else
+			colmcnt=0;
+			
+		if(TestcaseID<=20)
+			colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells();
+		
+		else
+			colcnt=0;
+		
+		//System.out.println("Column count in New sheet: "+colcount, Column count in Edit sheet: "+colmcnt+" and Delete sheet: "+colcnt);
 
 		
 		if(colcount>=8)
@@ -590,28 +609,28 @@ public class ExcelRepository implements IGuruRepository {
 					sh.getRow(TestcaseID).getCell(colcount-2).setCellStyle(styleF);
 				}
 			
-			/*
-Need to add steps to write into EditAcct
+			
 	//Updating the EditAcct sheet with newly created account ids
-			 * if(colmcnt>=11 && TestcaseID==1)
+			  if(colmcnt>=6 && TestcaseID<=4)
 			{
-				for(int i=1;i<=8;i++)
-				sh1.getRow(i).getCell(colmcnt-9).setCellValue(custid);
+				for(int i=1;i<=4;i++)
+				sh1.getRow(i).getCell(colmcnt-4).setCellValue(acctnum);
 			}
-			System.out.println("EditCust sheet updated");
-			*/
+			System.out.println("EditAcct sheet updated");
+			
 			
 			//Updating the DeleteAcct sheet with newly created account ids
 			if(colcnt>=5 && acctnum!= null)
 			{				
 				int loopcounter=0;	
-				for(int i=1;i<1000;i++)
+				for(int i=1;i<21;i++)
 					{
+						sh2.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 						boolean check = sh2.getRow(i).getCell(2).getStringCellValue().isEmpty();
 						if(check)
 							{
 								
-								System.out.println("Value of i is "+ i);
+								//System.out.println("Value of i is "+ i);
 								sh2.getRow(i).getCell(2).setCellValue(acctnum);
 								loopcounter++;
 								break;
@@ -620,7 +639,7 @@ Need to add steps to write into EditAcct
 					if(loopcounter>0)
 					{
 						System.out.println("DeleteAcct sheet updated");
-						System.out.println("Loop counter --"+loopcounter);
+						//System.out.println("Loop counter --"+loopcounter);
 					}
 					
 					else
@@ -795,7 +814,7 @@ Need to add steps to write into EditAcct
 	    
 	
 		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		System.out.println("Column count "+colcount);
+		//System.out.println("Column count "+colcount);
 		if(colcount>=5)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
@@ -813,6 +832,7 @@ Need to add steps to write into EditAcct
 		wb.close();	
 	}
 
+	@SuppressWarnings("deprecation")
 	public void deleteAcctnumsFromExcel() throws IOException
 	{
 		File file = new File(filepath);
@@ -822,19 +842,27 @@ Need to add steps to write into EditAcct
 		int counter = 0;
 		for(int i=1;i<=13;i++)
 		{
+			sh.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 			if(!sh.getRow(i).getCell(2).getStringCellValue().isEmpty())
 			
+					{
 					sh.getRow(i).getCell(2).setCellValue("");
+					System.out.println(sh.getRow(i).getCell(2).getStringCellValue());
+					counter++;
+					}
+					else
+						System.out.println("Account number is blank, nothing to delete");
 		}
-				for(int j=1;j<=13;j++)
+				/*NEED TO DELETE
+				 * for(int j=1;j<=13;j++)
 			{
 					if(sh.getRow(j).getCell(2).getStringCellValue().isEmpty())
 					{
 						counter++;
 						//System.out.println("Counter at iteration: "+j+ " is "+counter);
 					}
-			}
-				if(counter==17)
+			}*/
+				if(counter==13)
 					System.out.println("All records are deleted");
 				else
 					System.out.println("All records are not deleted");

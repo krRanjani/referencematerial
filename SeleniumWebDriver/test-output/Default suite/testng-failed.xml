@@ -5,7 +5,7 @@
     <classes>
       <class name="guru99.Controllers.MainController">
         <methods>
-          <include name="AddNewAccount"/>
+          <include name="EditAccount"/>
         </methods>
       </class> <!-- guru99.Controllers.MainController -->
     </classes>

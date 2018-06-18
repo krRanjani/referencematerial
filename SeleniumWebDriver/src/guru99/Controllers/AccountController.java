@@ -155,12 +155,21 @@ public class AccountController {
 		{
 			Select type = new Select(driver.findElement(By.name("a_type")));
 			List <WebElement> typeList = type.getOptions();
-			
+			System.out.println(typeList.size()+" is the size");
 			for(int i=0;i<typeList.size();i++)
 			{
 				String value = typeList.get(i).getAttribute("value");
-				if(value.equalsIgnoreCase(oEditAcctInfo.acctType))
+				System.out.println("List value "+value);
+				System.out.println("Value of i is "+i);
+				
+				if(value.equalsIgnoreCase("Current"))
+					{
 					typeList.get(i).click();
+					}
+				else {
+				System.out.println("Mismatch");
+				typeList.get(i).click();
+				}
 			}
 			
 			try
@@ -181,10 +190,12 @@ public class AccountController {
 					none.accept();
 					oGuruRepository.updateEditAcctStaus(testcaseID, "Fail - Message mismatch.."+msg);
 				}
-			}catch(Exception Ex3)
+			} catch(Exception Ex3)
 			{
-				String output = driver.findElement(By.xpath(".//table[@id='account']/tbody/tr[1]/td/p")).getText();
-				String custid = driver.findElement(By.xpath(".//table[@id='account']/tbody/tr[4]/td[2]")).getText();
+				String output = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+				//.//table[@id='account']/tbody/tr[1]/td/p
+				String custid = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]")).getText();
+				//.//table[@id='account']/tbody/tr[4]/td[2]
 				System.out.println(custid+" -"+output);
 			
 				if(output.equalsIgnoreCase(oEditAcctInfo.message))

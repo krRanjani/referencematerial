@@ -79,7 +79,7 @@ public class MainController {
 		}
 		oGuruRepository.deleteCustidsFromExcel();
 	}
-*/
+
 @Test(priority=4)
 	public void AddNewAccount() throws IOException
 	{
@@ -90,45 +90,42 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		//for(aaTestcaseID=2;aaTestcaseID<27;aaTestcaseID++)
-		for(aaTestcaseID=23;aaTestcaseID<25;aaTestcaseID++)
+		for(aaTestcaseID=1;aaTestcaseID<27;aaTestcaseID++)
 		{
-			/*if(aaTestcaseID==1||aaTestcaseID==2||aaTestcaseID==3||aaTestcaseID==4||aaTestcaseID==5||aaTestcaseID==6||aaTestcaseID==12||aaTestcaseID==18||aaTestcaseID==19||aaTestcaseID==20)
-				continue;*/
 			AccountController oAccountController = new AccountController(aaTestcaseID,driver,oGuruRepository);
 			oAccountController.addNewAcct();
 		}
 	}
 
-/*
-@Test(priority=5)
+*/
+	@Test(priority=5)
 	public void EditAccount() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when EditAccount function is executed alone
-		//int lTestcaseID = 1;
+		int lTestcaseID = 1;
 		int eaTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		//oLoginLogoutController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
-		for(eaTestcaseID=1;eaTestcaseID<2;eaTestcaseID++)
+		for(eaTestcaseID=1;eaTestcaseID<13;eaTestcaseID++)
 		{
 			AccountController oAccountController = new AccountController(eaTestcaseID,driver,oGuruRepository);
 			oAccountController.editAcct();
 		}	
 	}
 
-@Test(priority=12)
+/*@Test(priority=6)
 	public void DeleteAccount() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when DeleteAccount function is executed alone
-		//int lTestcaseID = 1;
+		int lTestcaseID = 1;
 		int daTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		//oLoginLogoutController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
-		for(daTestcaseID=1;daTestcaseID<2;daTestcaseID++)
+		for(daTestcaseID=1;daTestcaseID<21;daTestcaseID++)
 		{
 			AccountController oAccountController = new AccountController(daTestcaseID,driver,oGuruRepository);
 			oAccountController.deleteAcct();
