@@ -163,7 +163,7 @@ public class AccountController {
 			}
 		}
 			
-			driver.findElement(By.name("AccSubmit")).click();
+			driver.findElement(By.name("AccSubmit")).click(); //Newly added
 			
 			try
 			{

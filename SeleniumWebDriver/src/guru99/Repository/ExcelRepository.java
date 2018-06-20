@@ -251,7 +251,7 @@ public class ExcelRepository implements IGuruRepository {
 				System.out.println("EditCust sheet updated");
 			}
 			else
-				System.out.println("Nothing to update in EditCust sheet");
+				System.out.println("Nothing to update in EditCust sheet"); //NEW
 			
 			
 			//Updating the DeleteCust sheet with newly created customer ids
@@ -264,7 +264,7 @@ public class ExcelRepository implements IGuruRepository {
 							{
 								//System.out.println("Value of i is "+ i);
 								sh2.getRow(i).getCell(2).setCellValue(custid);
-								System.out.println("DeleteCust sheet updated");
+								System.out.println("DeleteCust sheet updated"); //NEW
 								break;
 							}
 						

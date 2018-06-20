@@ -227,7 +227,7 @@ public class CustomerController {
 		}
 	}
 	
-	public void deleteCustomer() throws IOException
+	public void deleteCustomer() throws IOException //NEED TO CHECK tomrrow
 	{
 		oDeleteCustInfo = oGuruRepository.readDeleteCustInfo(testcaseID, driver);
 

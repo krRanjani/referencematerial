@@ -36,7 +36,7 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 
-		for(acTestcaseID=16;acTestcaseID<18;acTestcaseID++)
+		for(acTestcaseID=1;acTestcaseID<51;acTestcaseID++)
 		{
 			CustomerController oCustomerController = new CustomerController(acTestcaseID,driver,oGuruRepository);
 			oCustomerController.addNewCustomer();
