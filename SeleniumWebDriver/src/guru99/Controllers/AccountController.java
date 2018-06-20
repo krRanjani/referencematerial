@@ -155,26 +155,19 @@ public class AccountController {
 		{
 			Select type = new Select(driver.findElement(By.name("a_type")));
 			List <WebElement> typeList = type.getOptions();
-			System.out.println(typeList.size()+" is the size");
 			for(int i=0;i<typeList.size();i++)
 			{
 				String value = typeList.get(i).getAttribute("value");
-				System.out.println("List value "+value);
-				System.out.println("Value of i is "+i);
-				
-				if(value.equalsIgnoreCase("Current"))
-					{
-					typeList.get(i).click();
-					}
-				else {
-				System.out.println("Mismatch");
-				typeList.get(i).click();
-				}
+					if(value.equalsIgnoreCase(oEditAcctInfo.acctType))
+						typeList.get(i).click();
 			}
+		}
+			
+			driver.findElement(By.name("AccSubmit")).click();
 			
 			try
 			{
-				WebDriverWait wait1 = new WebDriverWait(driver,10);
+				WebDriverWait wait1 = new WebDriverWait(driver,15);
 				wait1.until(ExpectedConditions.alertIsPresent());
 				
 				Alert none = driver.switchTo().alert();
@@ -204,7 +197,6 @@ public class AccountController {
 					oGuruRepository.updateEditAcctStaus(testcaseID, "Fail - "+Ex3);
 			}	
 		}	
-	}
 	
 	public void deleteAcct() throws IOException
 	{

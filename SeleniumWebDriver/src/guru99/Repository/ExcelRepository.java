@@ -226,7 +226,7 @@ public class ExcelRepository implements IGuruRepository {
 		else
 			colcnt=0;
 		
-		//System.out.println("Column count in New sheet: "+colcount, Column count in Edit sheet: "+colmcnt+" and Delete sheet: "+colcnt);
+		//System.out.println("Column count in New sheet: "+colcount+", Column count in Edit sheet: "+colmcnt+" and Delete sheet: "+colcnt);
 		
 		if(colcount>=15)
 		{
@@ -248,26 +248,32 @@ public class ExcelRepository implements IGuruRepository {
 			{
 				for(int i=1;i<=8;i++)
 				sh1.getRow(i).getCell(colmcnt-9).setCellValue(custid);
+				System.out.println("EditCust sheet updated");
 			}
-			System.out.println("EditCust sheet updated");
+			else
+				System.out.println("Nothing to update in EditCust sheet");
+			
 			
 			//Updating the DeleteCust sheet with newly created customer ids
-			if(colcnt>=5 && custid!= null)
-			{				
-					for(int i=1;i<1000;i++)
+			if(colcnt>=5 && custid ==" ")
+			{		System.out.println("Customer id is "+custid);		
+					for(int i=1;i<=15;i++)
 					{
 						boolean check = sh2.getRow(i).getCell(2).getStringCellValue().isEmpty();
 						if(check)
 							{
 								//System.out.println("Value of i is "+ i);
 								sh2.getRow(i).getCell(2).setCellValue(custid);
+								System.out.println("DeleteCust sheet updated");
 								break;
 							}
+						
 					}
-					System.out.println("DeleteCust sheet updated");
 				}
-					
+			else if(TestcaseID>15 || custid == " ")
+				System.out.println("Nothing to update in DeleteCust sheet");
 			}
+		
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();

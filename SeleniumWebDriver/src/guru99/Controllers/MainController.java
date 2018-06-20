@@ -27,7 +27,7 @@ public class MainController {
 	}
  }*/
  
-	/* @Test(priority=2)
+	@Test(priority=2)
 	public void AddNewCustomer() throws IOException
 	{
 		int lTestcaseID = 1;
@@ -36,14 +36,14 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 
-		for(acTestcaseID=1;acTestcaseID<2;acTestcaseID++)
+		for(acTestcaseID=16;acTestcaseID<18;acTestcaseID++)
 		{
 			CustomerController oCustomerController = new CustomerController(acTestcaseID,driver,oGuruRepository);
 			oCustomerController.addNewCustomer();
 		}
 	}
 
-@Test(priority=3)
+/*@Test(priority=3)
 	public void EditCustomer() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when EditCustomer function is executed alone
@@ -97,7 +97,7 @@ public class MainController {
 		}
 	}
 
-*/
+
 	@Test(priority=5)
 	public void EditAccount() throws IOException
 	{

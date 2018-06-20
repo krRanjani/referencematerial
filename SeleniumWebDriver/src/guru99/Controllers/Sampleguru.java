@@ -1,10 +1,13 @@
 package guru99.Controllers;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class Sampleguru {
 	
@@ -16,6 +19,24 @@ public class Sampleguru {
 		driver.findElement(By.name("uid")).sendKeys("mngr137461");
 		driver.findElement(By.name("password")).sendKeys("Guru@2018");
 		driver.findElement(By.name("btnLogin")).click();
+		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[6]/a")).click();
+		driver.findElement(By.name("accountno")).sendKeys("44363");
+		driver.findElement(By.name("AccSubmit")).click();
+		Select select = new Select(driver.findElement(By.name("a_type")));
+		List <WebElement> list = select.getOptions();		
+		
+		for(int i=0;i<list.size();i++)
+		{
+			System.out.println(list.get(i).getText());
+			if(list.get(i).getText().equalsIgnoreCase("Savings"))
+				list.get(i).click();
+				//select.selectByValue("Current");
+		}
+		
+		
+		
+		
+		
 		
 		
 		/*for(int i=1;i<2;i++)

@@ -8,7 +8,7 @@ public class EditAcctInfo {
 	public String message;
 	//Account details updated Successfully!!!
 	//No Changes made to Account records
-	public String warn= "please fill all fields";
+	public String warn= "Please fill all mandotary fields";
 	public String fail = "could not be updated!!";
 
 
