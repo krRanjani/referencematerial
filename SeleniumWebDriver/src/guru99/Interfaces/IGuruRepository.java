@@ -38,10 +38,11 @@ public interface IGuruRepository {
 	
 	public EditAcctInfo readEditAcctInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateEditAcctStaus(int TestcaseID,String status) throws IOException;
+	public void deleteAcctnumsFromEditAcctExcel() throws IOException;
 	
 	public DeleteAcctInfo readDeleteAcctInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateDeleteAcctStatus(int TestcaseID,String status) throws IOException;
-	public void deleteAcctnumsFromExcel() throws IOException;
+	public void deleteAcctnumsFromDeleteAcctExcel() throws IOException;
 	
 	public DepositInfo readDepositInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateDepositStatus(int TestcaseID,String status,String currentbal) throws IOException;

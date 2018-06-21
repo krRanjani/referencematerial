@@ -25,9 +25,9 @@ public class MainController {
 	LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository); 
 	oLoginLogoutController.Login();
 	}
- }*/
+ }
  
-	@Test(priority=2)
+@Test(priority=2)
 	public void AddNewCustomer() throws IOException
 	{
 		int lTestcaseID = 1;
@@ -71,7 +71,7 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(dcTestcaseID=1;dcTestcaseID<27;dcTestcaseID++)
+		for(dcTestcaseID=1;dcTestcaseID<25;dcTestcaseID++)
 			
 		{
 			CustomerController oCustomerController = new CustomerController(dcTestcaseID,driver,oGuruRepository);
@@ -79,7 +79,7 @@ public class MainController {
 		}
 		oGuruRepository.deleteCustidsFromExcel();
 	}
-
+*/
 @Test(priority=4)
 	public void AddNewAccount() throws IOException
 	{
@@ -90,7 +90,7 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(aaTestcaseID=1;aaTestcaseID<27;aaTestcaseID++)
+		for(aaTestcaseID=1;aaTestcaseID<6;aaTestcaseID++)
 		{
 			AccountController oAccountController = new AccountController(aaTestcaseID,driver,oGuruRepository);
 			oAccountController.addNewAcct();
@@ -108,11 +108,12 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(eaTestcaseID=1;eaTestcaseID<13;eaTestcaseID++)
+		for(eaTestcaseID=1;eaTestcaseID<5;eaTestcaseID++)
 		{
 			AccountController oAccountController = new AccountController(eaTestcaseID,driver,oGuruRepository);
 			oAccountController.editAcct();
 		}	
+		oGuruRepository.deleteAcctnumsFromEditAcctExcel();
 	}
 
 /*@Test(priority=6)
@@ -131,7 +132,7 @@ public class MainController {
 			oAccountController.deleteAcct();
 		}
 		
-		oGuruRepository.deleteAcctnumsFromExcel();
+		oGuruRepository.deleteAcctnumsFromDeleteAcctExcel();
 	}
 
 @Test(priority=7)

@@ -222,7 +222,7 @@ public class AccountController {
 			if(error.equalsIgnoreCase(oDeleteAcctInfo.message) && confirm.equalsIgnoreCase(oDeleteAcctInfo.warn))
 			{
 				alert.accept();
-				oGuruRepository.updateDeleteAcctStatus(testcaseID, "Pass - "+error);
+				oGuruRepository.updateDeleteAcctStatus(testcaseID, "Pass first condition - "+error);
 				
 			}
 			else if(confirm.equalsIgnoreCase(oDeleteAcctInfo.conf))
@@ -237,26 +237,26 @@ public class AccountController {
 				if(msg.equalsIgnoreCase(oDeleteAcctInfo.message))
 				{
 					delete.accept();
-					oGuruRepository.updateDeleteAcctStatus(testcaseID, "Pass - "+msg);
+					oGuruRepository.updateDeleteAcctStatus(testcaseID, "Pass second condition - "+msg);
 
 				}
 				else
 				{
 					delete.accept();
-					oGuruRepository.updateDeleteAcctStatus(testcaseID, "Fail - "+msg);
+					oGuruRepository.updateDeleteAcctStatus(testcaseID, "Fail third condition - "+msg);
 				}
 				
 			}
 			else if(confirm.equalsIgnoreCase(oDeleteAcctInfo.fail))
 			{
 				alert.accept();
-				oGuruRepository.updateDeleteAcctStatus(testcaseID, "Fail - "+confirm);
+				oGuruRepository.updateDeleteAcctStatus(testcaseID, "Fail fourth condition - "+confirm);
 				
 			}
 			else 
 			{	
 				alert.accept();
-				oGuruRepository.updateDeleteAcctStatus(testcaseID, "Fail - Message mismatch.."+confirm);
+				oGuruRepository.updateDeleteAcctStatus(testcaseID, "Fail fifth condition - Message mismatch.."+confirm);
 			}
 		} catch(Exception Ex4)
 		{

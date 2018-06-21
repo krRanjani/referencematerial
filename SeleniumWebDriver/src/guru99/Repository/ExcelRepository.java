@@ -3,6 +3,7 @@ package guru99.Repository;
 //This is for reading the inputs from excel and writing the test results into excel for all the functions
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -179,6 +180,7 @@ public class ExcelRepository implements IGuruRepository {
 		updateNewCustStatusInExcel(TestcaseID,status,custid);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void updateNewCustStatusInExcel(int TestcaseID,String status,String custid) throws IOException
 	{
 		File file = new File(filepath);
@@ -251,23 +253,23 @@ public class ExcelRepository implements IGuruRepository {
 				System.out.println("EditCust sheet updated");
 			}
 			else
-				System.out.println("Nothing to update in EditCust sheet"); //NEW
+				System.out.println("Nothing to update in EditCust sheet");
 			
 			
 			//Updating the DeleteCust sheet with newly created customer ids
-			if(colcnt>=5 && custid ==" ")
-			{		System.out.println("Customer id is "+custid);		
+			if(colcnt>=5 && custid !=" ")
+			{		//System.out.println("Customer id is "+custid);		
 					for(int i=1;i<=15;i++)
 					{
+						sh2.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 						boolean check = sh2.getRow(i).getCell(2).getStringCellValue().isEmpty();
 						if(check)
 							{
 								//System.out.println("Value of i is "+ i);
 								sh2.getRow(i).getCell(2).setCellValue(custid);
-								System.out.println("DeleteCust sheet updated"); //NEW
+								System.out.println("DeleteCust sheet updated");
 								break;
 							}
-						
 					}
 				}
 			else if(TestcaseID>15 || custid == " ")
@@ -472,6 +474,7 @@ public class ExcelRepository implements IGuruRepository {
 		wb.close();	
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void deleteCustidsFromExcel() throws IOException
 	{
 		File file = new File(filepath);
@@ -480,21 +483,30 @@ public class ExcelRepository implements IGuruRepository {
 		XSSFSheet sh = wb.getSheet("DeleteCust");
 		int counter = 0;
 		
-		for(int i=1;i<=17;i++)
+		for(int i=1;i<=15;i++)
 		{
+			sh.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 			if(!sh.getRow(i).getCell(2).getStringCellValue().isEmpty())
-			
-					sh.getRow(i).getCell(2).setCellValue("");
+				{
+				sh.getRow(i).getCell(2).setCellValue("");
+				System.out.println(sh.getRow(i).getCell(2).getStringCellValue());
+				counter++;
+				}
+			else
+				System.out.println("Account number is blank, nothing to delete");
+					
 		}
-				for(int j=1;j<=17;j++)
+		/*NEED TO DELETE
+				for(int j=1;j<=15;j++)
 			{
 					if(sh.getRow(j).getCell(2).getStringCellValue().isEmpty())
 					{
 						counter++;
 						//System.out.println("Counter at iteration: "+j+ " is "+counter);
 					}
-			}
-				if(counter==17)
+			}*/
+		
+				if(counter==15)
 					System.out.println("All records are deleted");
 				else
 					System.out.println("All records are not deleted");
@@ -620,16 +632,25 @@ public class ExcelRepository implements IGuruRepository {
 			  if(colmcnt>=6 && TestcaseID<=4)
 			{
 				for(int i=1;i<=4;i++)
-				sh1.getRow(i).getCell(colmcnt-4).setCellValue(acctnum);
+				{
+					sh1.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+					boolean check = sh1.getRow(i).getCell(2).getStringCellValue().isEmpty();
+					if(check)
+						{
+						sh1.getRow(i).getCell(colmcnt-4).setCellValue(acctnum);
+						System.out.println("EditAcct sheet updated");
+						break;
+						}
+				
+				}
 			}
-			System.out.println("EditAcct sheet updated");
+			else if(TestcaseID>4)
+				System.out.println("Nothing to update in EditCust sheet");
 			
-			
-			//Updating the DeleteAcct sheet with newly created account ids
-			if(colcnt>=5 && acctnum!= null)
+			/*//Updating the DeleteAcct sheet with newly created account ids
+			if(colcnt>=5 && acctnum != " ")
 			{				
-				int loopcounter=0;	
-				for(int i=1;i<21;i++)
+				for(int i=1;i<=13;i++)
 					{
 						sh2.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
 						boolean check = sh2.getRow(i).getCell(2).getStringCellValue().isEmpty();
@@ -638,25 +659,17 @@ public class ExcelRepository implements IGuruRepository {
 								
 								//System.out.println("Value of i is "+ i);
 								sh2.getRow(i).getCell(2).setCellValue(acctnum);
-								loopcounter++;
+								System.out.println("DeleteAcct sheet updated");
 								break;
 							}
 					}
-					if(loopcounter>0)
-					{
-						System.out.println("DeleteAcct sheet updated");
-						//System.out.println("Loop counter --"+loopcounter);
-					}
-					
-					else
-						System.out.println("No need to update DeleteAcct sheet");
-				}
-					
 			}
+					else if(TestcaseID>13 || acctnum == " ")
+						System.out.println("No need to update DeleteAcct sheet");*/
+		}
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
-		wb.close();
-		
+		wb.close();	
 	}
 
 	public EditAcctInfo readEditAcctInfo(int TestcaseID,WebDriver Driver) throws IOException
@@ -749,6 +762,37 @@ public class ExcelRepository implements IGuruRepository {
 		wb.write(fos);
 		wb.close();		
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void deleteAcctnumsFromEditAcctExcel() throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("EditAcct");
+		int counter = 0;
+		for(int i=1;i<=4;i++)
+		{
+			sh.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+			if(!sh.getRow(i).getCell(2).getStringCellValue().isEmpty())
+			
+					{
+						sh.getRow(i).getCell(2).setCellValue("");
+						//System.out.println(sh.getRow(i).getCell(2).getStringCellValue());
+						counter++;
+					}
+					else
+						System.out.println("Account number is blank, nothing to delete");
+		}
+				if(counter==4)
+					System.out.println("All records are deleted");
+				else
+					System.out.println("All records are not deleted");
+					
+					FileOutputStream fos = new FileOutputStream(file);
+					wb.write(fos);
+					wb.close();	
+	}
 
 	public DeleteAcctInfo readDeleteAcctInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
@@ -839,7 +883,7 @@ public class ExcelRepository implements IGuruRepository {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void deleteAcctnumsFromExcel() throws IOException
+	public void deleteAcctnumsFromDeleteAcctExcel() throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
