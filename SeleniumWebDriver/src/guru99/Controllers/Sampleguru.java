@@ -19,20 +19,16 @@ public class Sampleguru {
 		driver.findElement(By.name("uid")).sendKeys("mngr137461");
 		driver.findElement(By.name("password")).sendKeys("Guru@2018");
 		driver.findElement(By.name("btnLogin")).click();
-		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[6]/a")).click();
+		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[8]/a")).click();
 		driver.findElement(By.name("accountno")).sendKeys("44363");
+		driver.findElement(By.name("ammount")).sendKeys("amo");
+		driver.findElement(By.name("desc")).sendKeys("Sample");
 		driver.findElement(By.name("AccSubmit")).click();
-		Select select = new Select(driver.findElement(By.name("a_type")));
-		List <WebElement> list = select.getOptions();		
+		String output = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+		String currentbal = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[23]/td[2]")).getText();
+		System.out.println(output+" with current balance: "+currentbal);
 		
-		for(int i=0;i<list.size();i++)
-		{
-			System.out.println(list.get(i).getText());
-			if(list.get(i).getText().equalsIgnoreCase("Savings"))
-				list.get(i).click();
-				//select.selectByValue("Current");
-		}
-		
+
 		
 		
 		
@@ -49,7 +45,6 @@ public class Sampleguru {
 			driver.findElement(By.name("desc")).sendKeys("maximum");
 		
 			driver.findElement(By.name("AccSubmit")).click();
-			String currentbal = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[23]/td[2]")).getText();
 	
 			System.out.println("Current balance for run :"+i+" is "+currentbal);
 		}*/

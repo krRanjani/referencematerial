@@ -9,5 +9,8 @@ public class DepositInfo {
 	public String description;
 	public String message;
 
-	public String warn= "please fill all fields";
+	public String warn = "Account does not exist"; //For blank account no,characters,spl characters and blank spaces for account no field
+	public String fail = "Amount could not be credited"; //For blank amount,characters,spl characters and blank spaces for amount field
+	
+	
 }

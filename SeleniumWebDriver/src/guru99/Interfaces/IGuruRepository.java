@@ -28,13 +28,14 @@ public interface IGuruRepository {
 	
 	public EditCustInfo readEditCustInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateEditCustStaus(int TestcaseID,String status) throws IOException;
+	public void deleteCustidsFromEditCustExcel() throws IOException;
 	
 	public DeleteCustInfo readDeleteCustInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateDeleteCustStatus(int TestcaseID,String status) throws IOException;
-	public void deleteCustidsFromExcel() throws IOException;
+	public void deleteCustidsFromDeleteCustExcel() throws IOException;
 	
 	public NewAcctInfo readNewAcctInfo(int TestcaseID,WebDriver Driver) throws IOException;
-	public void updateNewAcctStatus(int TestcaseID,String status,String acctnum) throws IOException;
+	public void updateNewAcctStatus(int TestcaseID,String status,String acctnum,String amount) throws IOException;
 	
 	public EditAcctInfo readEditAcctInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateEditAcctStaus(int TestcaseID,String status) throws IOException;
@@ -46,6 +47,7 @@ public interface IGuruRepository {
 	
 	public DepositInfo readDepositInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateDepositStatus(int TestcaseID,String status,String currentbal) throws IOException;
+	public void deleteAcctnumAmountFromDepositExcel() throws IOException;
 
 	public WithdrawalInfo readWithdrawalInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateWithdrawalStatus(int TestcaseID,String status,String currentbal) throws IOException;
@@ -55,6 +57,7 @@ public interface IGuruRepository {
 	
 	public BalEnquiryInfo readBalEnquiryInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateBalEnquiryStatus(int TestcaseID,String status,String balance) throws IOException;
+	public void deleteAcctnumAmountFromBalEnquiryExcel() throws IOException;
 
 	public BankStatementInfo readBankStatementInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateBankStatementStatus(int TestcaseID,String status) throws IOException;

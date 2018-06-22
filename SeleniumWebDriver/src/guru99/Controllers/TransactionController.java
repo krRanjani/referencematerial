@@ -56,12 +56,11 @@ public class TransactionController {
 		String error3 = driver.findElement(By.id("message17")).getText();
 		
 		error = error1+error2+error3;
-		
-		driver.findElement(By.name("AccSubmit")).click();
+				driver.findElement(By.name("AccSubmit")).click();
 		
 		try
 		{
-			WebDriverWait wait = new WebDriverWait(driver,10);
+			WebDriverWait wait = new WebDriverWait(driver,15);
 			wait.until(ExpectedConditions.alertIsPresent());
 			
 			Alert alert = driver.switchTo().alert();
@@ -70,24 +69,32 @@ public class TransactionController {
 			if(error.equalsIgnoreCase(oDepositInfo.message) && msg.equalsIgnoreCase(oDepositInfo.warn))
 			{
 				alert.accept();
-				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+error,"");
+				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+oDepositInfo.warn,"0");
 				
+			}
+			else if(error.equalsIgnoreCase(oDepositInfo.message) && msg.equalsIgnoreCase(oDepositInfo.fail))
+			{
+				alert.accept();
+				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+oDepositInfo.fail, "0");
 			}
 			else if(msg.equalsIgnoreCase(oDepositInfo.message))
 			{
 				alert.accept();
-				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+msg,"");
+				oGuruRepository.updateDepositStatus(testcaseID, "Pass - "+msg,"0");
 			}
-			
-			else
+			else 
+				//if((!error.equalsIgnoreCase(oDepositInfo.message)) ||(!msg.equalsIgnoreCase(oDepositInfo.warn))||(!msg.equalsIgnoreCase(oDepositInfo.fail)))
 			{
 				alert.accept();
-				oGuruRepository.updateDepositStatus(testcaseID, "Fail - Message mismatch.."+msg,"");
+				oGuruRepository.updateDepositStatus(testcaseID, "Fail - Message mismatch.."+msg,"0");
 			}
 		} catch(Exception Ex1)
 		{
-			String output = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[1]/td/p")).getText();
-			String currentbal = driver.findElement(By.xpath(".//table[@id='deposit']/tbody/tr[23]/td[2]")).getText();
+			
+			String output = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+			//.//table[@id='deposit']/tbody/tr[1]/td/p
+			String currentbal = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[23]/td[2]")).getText();
+			//.//table[@id='deposit']/tbody/tr[23]/td[2]
 			
 			System.out.println(output+" with current balance: "+currentbal);
 			
@@ -96,6 +103,10 @@ public class TransactionController {
 					{
 						oGuruRepository.updateDepositStatus(testcaseID, "Pass",currentbal);
 					}
+				else if ((output.equalsIgnoreCase(oDepositInfo.message+" "+oDepositInfo.acctnum)) && ((oDepositInfo.amount).length()>6))
+				{
+					oGuruRepository.updateDepositStatus(testcaseID, "Pass",currentbal);
+				}
 				else if (output.equalsIgnoreCase(oDepositInfo.message+" "+oDepositInfo.acctnum))
 					{
 						oGuruRepository.updateDepositStatus(testcaseID, "Fail - Current balance is not matching the sum of amount and balBefore",currentbal);
@@ -288,16 +299,16 @@ public class TransactionController {
 			}
 		}catch(Exception Ex4)
 		{
-			String balmsg = driver.findElement(By.xpath(".//table[@id='balenquiry']/tbody/tr[1]/td/p")).getText();
-			String balance = driver.findElement(By.xpath(".//table[@id='balenquiry']/tbody/tr[16]/td[2]")).getText();
-			
+			String balmsg = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+			//.//table[@id='balenquiry']/tbody/tr[1]/td/p
+			String balance = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[16]/td[2]")).getText();
+			//.//table[@id='balenquiry']/tbody/tr[16]/td[2]
 			
 			if(balmsg.equalsIgnoreCase(oBalEnquiryInfo.message+" "+oBalEnquiryInfo.acctnum))
 				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Pass",balance);
 			else
 				oGuruRepository.updateBalEnquiryStatus(testcaseID, "Fail - "+Ex4,"");
 		}
-		
 	}
 	
 	public void miniStatement() throws IOException

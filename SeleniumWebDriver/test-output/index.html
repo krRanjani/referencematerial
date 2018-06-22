@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" panel-name="test-xml-Default_suite" class="navigator-link ">
-                    <span>C:\Users\vinay\AppData\Local\Temp\testng-eclipse--333427986\testng-customsuite.xml</span>
+                    <span>C:\Users\vinay\AppData\Local\Temp\testng-eclipse-387146313\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">2 methods,   2 passed</span>
+                    <span class="method-stats">3 methods,   3 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -103,6 +103,11 @@
                       <span>
                         <img src="passed.png" width="3%"/>
                         <a href="#" panel-name="suite-Default_suite" title="guru99.Controllers.MainController" class="method navigator-link" hash-for-method="AddNewAccount">AddNewAccount</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Default_suite" title="guru99.Controllers.MainController" class="method navigator-link" hash-for-method="BalanceEnquiry">BalanceEnquiry</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
@@ -137,6 +142,13 @@
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
+                  <a name="BalanceEnquiry">
+                  </a> <!-- BalanceEnquiry -->
+                  <span class="method-name">BalanceEnquiry</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
                   <a name="EditAccount">
                   </a> <!-- EditAccount -->
                   <span class="method-name">EditAccount</span>
@@ -147,7 +159,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\vinay\AppData\Local\Temp\testng-eclipse--333427986\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\vinay\AppData\Local\Temp\testng-eclipse-387146313\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -196,15 +208,19 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(2);
+data.addRows(3);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'EditAccount')
+data.setCell(0, 1, 'AddNewAccount')
 data.setCell(0, 2, 'guru99.Controllers.MainController')
-data.setCell(0, 3, 79257);
+data.setCell(0, 3, 56795);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'AddNewAccount')
+data.setCell(1, 1, 'EditAccount')
 data.setCell(1, 2, 'guru99.Controllers.MainController')
-data.setCell(1, 3, 78191);
+data.setCell(1, 3, 42959);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'BalanceEnquiry')
+data.setCell(2, 2, 'guru99.Controllers.MainController')
+data.setCell(2, 3, 35704);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
@@ -242,7 +258,11 @@ return data;
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">EditAccount</span>
-                <span class="method-start">78195 ms</span>
+                <span class="method-start">56799 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">BalanceEnquiry</span>
+                <span class="method-start">99758 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

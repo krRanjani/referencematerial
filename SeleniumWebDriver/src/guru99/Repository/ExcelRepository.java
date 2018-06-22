@@ -3,7 +3,6 @@ package guru99.Repository;
 //This is for reading the inputs from excel and writing the test results into excel for all the functions
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -249,10 +248,18 @@ public class ExcelRepository implements IGuruRepository {
 			if(colmcnt>=11 && TestcaseID==1)
 			{
 				for(int i=1;i<=8;i++)
-				sh1.getRow(i).getCell(colmcnt-9).setCellValue(custid);
-				System.out.println("EditCust sheet updated");
+				{
+					sh1.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+					boolean check = sh1.getRow(i).getCell(2).getStringCellValue().isEmpty();
+					if(check)
+						{
+						sh1.getRow(i).getCell(colmcnt-9).setCellValue(custid);
+						System.out.println("EditCust sheet updated");
+						break;
+						}
+				}
 			}
-			else
+			else if(TestcaseID>1)
 				System.out.println("Nothing to update in EditCust sheet");
 			
 			
@@ -385,6 +392,38 @@ public class ExcelRepository implements IGuruRepository {
 		wb.write(fos);
 		wb.close();		
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void deleteCustidsFromEditCustExcel() throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("EditCust");
+		int counter = 0;
+		
+		for(int i=1;i<=8;i++)
+		{
+			sh.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+			if(!sh.getRow(i).getCell(2).getStringCellValue().isEmpty())
+				{
+					sh.getRow(i).getCell(2).setCellValue("");
+					System.out.println(sh.getRow(i).getCell(2).getStringCellValue());
+					counter++;
+				}
+			else
+				System.out.println("Customer id is blank, nothing to delete");
+					
+		}
+				if(counter==8)
+					System.out.println("All records are deleted");
+				else
+					System.out.println("All records are not deleted");
+					
+					FileOutputStream fos = new FileOutputStream(file);
+					wb.write(fos);
+					wb.close();	
+	}
 
 	public DeleteCustInfo readDeleteCustInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
@@ -475,7 +514,7 @@ public class ExcelRepository implements IGuruRepository {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void deleteCustidsFromExcel() throws IOException
+	public void deleteCustidsFromDeleteCustExcel() throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
@@ -493,7 +532,7 @@ public class ExcelRepository implements IGuruRepository {
 				counter++;
 				}
 			else
-				System.out.println("Account number is blank, nothing to delete");
+				System.out.println("Customer id is blank, nothing to delete");
 					
 		}
 		/*NEED TO DELETE
@@ -514,7 +553,6 @@ public class ExcelRepository implements IGuruRepository {
 					FileOutputStream fos = new FileOutputStream(file);
 					wb.write(fos);
 					wb.close();
-					
 	}
 	
 	public NewAcctInfo readNewAcctInfo(int TestcaseID,WebDriver Driver) throws IOException
@@ -555,13 +593,13 @@ public class ExcelRepository implements IGuruRepository {
 		
 	}
 
-	public void updateNewAcctStatus(int TestcaseID,String status,String acctnum) throws IOException
+	public void updateNewAcctStatus(int TestcaseID,String status,String acctnum,String amount) throws IOException
 	{
-		updateNewAcctStatusInExcel(TestcaseID,status,acctnum);
+		updateNewAcctStatusInExcel(TestcaseID,status,acctnum,amount);
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void updateNewAcctStatusInExcel(int TestcaseID,String status,String acctnum) throws IOException
+	private void updateNewAcctStatusInExcel(int TestcaseID,String status,String acctnum,String amount) throws IOException
 	{
 		File file = new File(filepath);
 		FileInputStream fis  = new FileInputStream(file);
@@ -569,6 +607,8 @@ public class ExcelRepository implements IGuruRepository {
 		XSSFSheet sh = wb.getSheet("NewAcct");
 		XSSFSheet sh1 = wb.getSheet("EditAcct");
 		XSSFSheet sh2 = wb.getSheet("DeleteAcct");
+		XSSFSheet sh3 = wb.getSheet("Deposit");
+		XSSFSheet sh4 = wb.getSheet("BalEnquiry");
 		CellStyle styleP = wb.createCellStyle();
 		
 	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
@@ -597,7 +637,8 @@ public class ExcelRepository implements IGuruRepository {
 	
 		int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
 		
-		int colmcnt,colcnt;
+		int colmcnt,colcnt,colucnt,columcount;
+		
 		if(TestcaseID<=12)
 			colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
@@ -605,11 +646,21 @@ public class ExcelRepository implements IGuruRepository {
 			
 		if(TestcaseID<=20)
 			colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells();
-		
 		else
 			colcnt=0;
 		
-		//System.out.println("Column count in New sheet: "+colcount, Column count in Edit sheet: "+colmcnt+" and Delete sheet: "+colcnt);
+		if(TestcaseID<=19)
+			colucnt = sh3.getRow(TestcaseID).getPhysicalNumberOfCells();
+		else
+			colucnt=0;
+		
+		if(TestcaseID<=8)
+			columcount = sh4.getRow(TestcaseID).getPhysicalNumberOfCells();
+		else
+			columcount=0;
+			
+		
+		System.out.println("Column count in New sheet: "+colcount+ ",in Edit sheet: "+colmcnt+ " , in Delete sheet: "+colcnt+" , in Deposit sheet: "+colucnt+ " and in BalEnquiry sheet: " +columcount );
 
 		
 		if(colcount>=8)
@@ -628,7 +679,7 @@ public class ExcelRepository implements IGuruRepository {
 				}
 			
 			
-	//Updating the EditAcct sheet with newly created account ids
+			//Updating the EditAcct sheet with newly created account ids
 			  if(colmcnt>=6 && TestcaseID<=4)
 			{
 				for(int i=1;i<=4;i++)
@@ -637,7 +688,7 @@ public class ExcelRepository implements IGuruRepository {
 					boolean check = sh1.getRow(i).getCell(2).getStringCellValue().isEmpty();
 					if(check)
 						{
-						sh1.getRow(i).getCell(colmcnt-4).setCellValue(acctnum);
+						sh1.getRow(i).getCell(2).setCellValue(acctnum);
 						System.out.println("EditAcct sheet updated");
 						break;
 						}
@@ -645,9 +696,9 @@ public class ExcelRepository implements IGuruRepository {
 				}
 			}
 			else if(TestcaseID>4)
-				System.out.println("Nothing to update in EditCust sheet");
+				System.out.println("Nothing to update in EditAcct sheet");
 			
-			/*//Updating the DeleteAcct sheet with newly created account ids
+			 //Updating the DeleteAcct sheet with newly created account ids
 			if(colcnt>=5 && acctnum != " ")
 			{				
 				for(int i=1;i<=13;i++)
@@ -665,8 +716,50 @@ public class ExcelRepository implements IGuruRepository {
 					}
 			}
 					else if(TestcaseID>13 || acctnum == " ")
-						System.out.println("No need to update DeleteAcct sheet");*/
+						System.out.println("No need to update DeleteAcct sheet");
+		
+			//Updating the Deposit sheet with newly created account ids with balance
+			  if(colucnt>=9 && TestcaseID<=8)
+			{
+				for(int i=1;i<=8;i++)
+				{
+					sh3.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+					sh3.getRow(i).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+					
+					boolean check1 = sh3.getRow(i).getCell(2).getStringCellValue().isEmpty();
+					boolean check2 = sh3.getRow(i).getCell(3).getStringCellValue().isEmpty();
+
+					if(check1 && check2)
+						{
+							sh3.getRow(i).getCell(2).setCellValue(acctnum);
+							sh3.getRow(i).getCell(3).setCellValue(amount);
+							
+							System.out.println("Deposit sheet updated");
+							break;
+						}
+				}
+			}
+			//Updating the BalEnquiry sheet with newly created account ids
+			  if(columcount>=6 && TestcaseID<=2)
+			{
+				for(int i=1;i<=2;i++)
+				{
+					sh4.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+					
+					boolean check = sh4.getRow(i).getCell(2).getStringCellValue().isEmpty();
+
+					if(check)
+						{
+							sh4.getRow(i).getCell(2).setCellValue(acctnum);
+							
+							System.out.println("BalEnquiry sheet updated");
+							break;
+						}
+				}
+			}
 		}
+		
+		
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();	
@@ -1002,14 +1095,14 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	
 	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-		System.out.println("Column count "+colcount);
+		//System.out.println("Column count "+colcount);
 		if(colcount>=9)
 		{
 			sh.getRow(TestcaseID).getCell(colcount-1).setCellValue(status);
 			if(Integer.parseInt(currentbal)>=0)
 			{	
 				sh.getRow(TestcaseID).getCell(colcount-2).setCellValue(currentbal);
-				sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
+				//sh.getRow(TestcaseID).getCell(colcount-6).setCellValue(currentbal);
 			}
 
 			if(status.contains("Pass"))
@@ -1024,6 +1117,44 @@ public class ExcelRepository implements IGuruRepository {
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();	
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void deleteAcctnumAmountFromDepositExcel() throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("Deposit");
+		int counter = 0;
+		
+		for(int i=1;i<=8;i++)
+		{
+			sh.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+			sh.getRow(i).getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+			
+			if((!sh.getRow(i).getCell(2).getStringCellValue().isEmpty()) && (!sh.getRow(i).getCell(3).getStringCellValue().isEmpty()))
+			
+					{
+						sh.getRow(i).getCell(2).setCellValue("");
+						sh.getRow(i).getCell(3).setCellValue("");
+						//System.out.println(sh.getRow(i).getCell(2).getStringCellValue());
+						//System.out.println(sh.getRow(i).getCell(2).getStringCellValue());
+					
+					counter++;
+					}
+					else
+						System.out.println("Account number or balance is blank, nothing to delete");
+		}
+
+				if(counter==8)
+					System.out.println("All records are deleted");
+				else
+					System.out.println("All records are not deleted");
+					
+					FileOutputStream fos = new FileOutputStream(file);
+					wb.write(fos);
+					wb.close();				
 	}
 
 	public WithdrawalInfo readWithdrawalInfo(int TestcaseID,WebDriver Driver) throws IOException
@@ -1267,7 +1398,6 @@ public class ExcelRepository implements IGuruRepository {
 		FileInputStream fis  = new FileInputStream(file);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sh = wb.getSheet("BalEnquiry");
-		XSSFSheet sh1 = wb.getSheet("Deposit");
 		CellStyle styleP = wb.createCellStyle();
 		
 	    styleP.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
@@ -1295,7 +1425,6 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	
 	    int colcount = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
-	    int colcnt = sh.getRow(TestcaseID).getPhysicalNumberOfCells();
 		//System.out.println("Column count "+colcount);
 		if(colcount>=6)
 		{
@@ -1310,26 +1439,44 @@ public class ExcelRepository implements IGuruRepository {
 					sh.getRow(TestcaseID).getCell(colcount-1).setCellStyle(styleF);
 				}
 		}
-		
-		if(colcnt>=9 && balance!= null)
-		{				
-				for(int i=1;i<1000;i++)
-				{
-					boolean check = sh1.getRow(i).getCell(3).getStringCellValue().isEmpty();
-					if(check)
-						{
-							System.out.println("Value of i is "+ i);
-							sh1.getRow(i).getCell(3).setCellValue(balance);
-							break;
-						}
-				}
-				System.out.println("Deposit sheet updated");
-			}
+			
 		FileOutputStream fos = new FileOutputStream(file);
 		wb.write(fos);
 		wb.close();	
 	}
 
+	@SuppressWarnings("deprecation")
+	public void deleteAcctnumAmountFromBalEnquiryExcel() throws IOException
+	{
+		File file = new File(filepath);
+		FileInputStream fis  = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("BalEnquiry");
+		int counter = 0;
+		
+		for(int i=1;i<=2;i++)
+		{
+			sh.getRow(i).getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+			
+			if((!sh.getRow(i).getCell(2).getStringCellValue().isEmpty()))
+			
+					{
+						sh.getRow(i).getCell(2).setCellValue("");
+						counter++;
+					}
+					else
+						System.out.println("Account number is blank, nothing to delete");
+		}
+
+				if(counter==2)
+					System.out.println("All records are deleted");
+				else
+					System.out.println("All records are not deleted");
+					
+					FileOutputStream fos = new FileOutputStream(file);
+					wb.write(fos);
+					wb.close();				
+	}
 	public BankStatementInfo readBankStatementInfo(int TestcaseID,WebDriver Driver) throws IOException
 	{
 		return readBankStatementInfoFromExcel(TestcaseID,Driver);

@@ -59,6 +59,7 @@ public class MainController {
 			CustomerController oCustomerController = new CustomerController(ecTestcaseID,driver,oGuruRepository);
 			oCustomerController.editCustomer();
 		}
+			oGuruRepository.deleteCustidsFromEditCustExcel();
 	}
 
 @Test(priority=13)
@@ -77,7 +78,7 @@ public class MainController {
 			CustomerController oCustomerController = new CustomerController(dcTestcaseID,driver,oGuruRepository);
 			oCustomerController.deleteCustomer();
 		}
-		oGuruRepository.deleteCustidsFromExcel();
+		oGuruRepository.deleteCustidsFromDeleteCustExcel();
 	}
 */
 @Test(priority=4)
@@ -90,14 +91,14 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(aaTestcaseID=1;aaTestcaseID<6;aaTestcaseID++)
+		for(aaTestcaseID=1;aaTestcaseID<27;aaTestcaseID++)
 		{
 			AccountController oAccountController = new AccountController(aaTestcaseID,driver,oGuruRepository);
 			oAccountController.addNewAcct();
 		}
 	}
 
-
+/*
 	@Test(priority=5)
 	public void EditAccount() throws IOException
 	{
@@ -108,7 +109,7 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(eaTestcaseID=1;eaTestcaseID<5;eaTestcaseID++)
+		for(eaTestcaseID=1;eaTestcaseID<13;eaTestcaseID++)
 		{
 			AccountController oAccountController = new AccountController(eaTestcaseID,driver,oGuruRepository);
 			oAccountController.editAcct();
@@ -145,11 +146,13 @@ public class MainController {
 		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		//oLoginLogoutController.Login();
 		
-		for(bTestcaseID=1;bTestcaseID<3;bTestcaseID++)
+		for(bTestcaseID=1;bTestcaseID<9;bTestcaseID++)
 		{
 			TransactionController oTransactionController = new TransactionController(bTestcaseID,driver,oGuruRepository);
 			oTransactionController.balanceEnquiry();
 		}
+		
+		oGuruRepository.deleteAcctnumAmountFromBalEnquiryExcel();
 	}
 
 @Test(priority=6)
@@ -162,13 +165,15 @@ public class MainController {
 		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		//oLoginLogoutController.Login();
 		
-		for(deTestcaseID=1;deTestcaseID<3;deTestcaseID++)
+		for(deTestcaseID=1;deTestcaseID<20;deTestcaseID++)
 		{
 			TransactionController oTransactionController = new TransactionController(deTestcaseID,driver,oGuruRepository);
 			oTransactionController.deposit();
 		}
+		
+		//oGuruRepository.deleteAcctnumAmountFromDepositExcel();
 	}
-
+/*
 @Test(priority=8)
 	public void Withdrawal() throws IOException
 	{

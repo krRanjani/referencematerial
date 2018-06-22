@@ -74,22 +74,22 @@ public class AccountController {
 			if(error.equalsIgnoreCase(oNewAcctInfo.message) && msg.equalsIgnoreCase(oNewAcctInfo.warn))
 			{
 				alert.accept();
-				oGuruRepository.updateNewAcctStatus(testcaseID, "Pass - "+error, "");
+				oGuruRepository.updateNewAcctStatus(testcaseID, "Pass - "+error, "","");
 			}
 			else if(msg.equalsIgnoreCase(oNewAcctInfo.message))
 			{
 				alert.accept();
-				oGuruRepository.updateNewAcctStatus(testcaseID, "Pass - "+msg, "");
+				oGuruRepository.updateNewAcctStatus(testcaseID, "Pass - "+msg, "","");
 			}
 			else if(msg.equalsIgnoreCase(oNewAcctInfo.fail))
 			{
 				alert.accept();
-				oGuruRepository.updateNewAcctStatus(testcaseID, "Fail - "+msg, "");
+				oGuruRepository.updateNewAcctStatus(testcaseID, "Fail - "+msg, "","");
 			}
 			else 
 			{
 				alert.accept();
-				oGuruRepository.updateNewAcctStatus(testcaseID, "Fail - Message mismatch.."+msg, "");
+				oGuruRepository.updateNewAcctStatus(testcaseID, "Fail - Message mismatch.."+msg, "","");
 			}
 		}catch (Exception Ex1)
 		
@@ -98,12 +98,14 @@ public class AccountController {
 			//.//table[@id='account']/tbody/tr[1]/td/p"
 			String acctnum = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[4]/td[2]")).getText();
 			//.//table[@id='account']/tbody/tr[4]/td[2]
-			System.out.println(output+" for customer id: "+oNewAcctInfo.custid+" with account number - "+acctnum);
+			String amount = oNewAcctInfo.initdepo;
+			
+			System.out.println(output+" for customer id: "+oNewAcctInfo.custid+" with account number - "+acctnum+" and initial deposit of Rs "+amount);
+			
 				if(output.equalsIgnoreCase(oNewAcctInfo.message))
-					oGuruRepository.updateNewAcctStatus(testcaseID, "Pass - "+output, acctnum);
+					oGuruRepository.updateNewAcctStatus(testcaseID, "Pass - "+output, acctnum, amount);
 				else
-					oGuruRepository.updateNewAcctStatus(testcaseID, "Fail - "+Ex1,"");
-
+					oGuruRepository.updateNewAcctStatus(testcaseID, "Fail - "+Ex1,"","");
 		}
 	}
 
@@ -163,7 +165,7 @@ public class AccountController {
 			}
 		}
 			
-			driver.findElement(By.name("AccSubmit")).click(); //Newly added
+			driver.findElement(By.name("AccSubmit")).click();
 			
 			try
 			{
