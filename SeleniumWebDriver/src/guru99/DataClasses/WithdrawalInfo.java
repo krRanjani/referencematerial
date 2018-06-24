@@ -9,8 +9,9 @@ public class WithdrawalInfo {
 	public String description;
 	public String message;
 
-	public String warn= "Please fill all fields";
-	//public String fail = "could not be updated!!";
+	public String warn = "Account does not exist"; //For blank account no,characters,spl characters and blank spaces for account no field
+	public String fail = "Amount could not be debited!!"; //For blank amount,characters,spl characters and blank spaces for amount field
+	
 
 
 }

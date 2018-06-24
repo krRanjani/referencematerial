@@ -39,7 +39,7 @@ public class TransactionController {
 	
 	public void deposit() throws IOException
 	{
-		oDepositInfo = oGuruRepository.readDepositInfo(testcaseID, driver);
+		oDepositInfo = oGuruRepository.readDepositInfo(testcaseID,driver);
 		
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[8]/a")).click();
@@ -140,37 +140,62 @@ public class TransactionController {
 		
 		try
 		{
-			WebDriverWait wait = new WebDriverWait(driver,10);
+			WebDriverWait wait = new WebDriverWait(driver,15);
 			wait.until(ExpectedConditions.alertIsPresent());
 			
 			Alert alert = driver.switchTo().alert();
 			String msg = alert.getText();
-			System.out.println("Nonsense"+msg);
+
+			System.out.println("Alert says "+msg);
+			System.out.println("*******************");
+			System.out.println("Excel says "+oWithdrawalInfo.message);
+			System.out.println("Excel  warning says "+oWithdrawalInfo.warn);
+			System.out.println("Excel failure says "+oWithdrawalInfo.fail);
+
+			
+//			if(msg.equalsIgnoreCase("Account does not exist"))
+//			{
+//				alert.accept();
+//				System.out.println("SAME ERROR");
+//			}
 			
 			if(error.equalsIgnoreCase(oWithdrawalInfo.message) && msg.equalsIgnoreCase(oWithdrawalInfo.warn))
 			{
 				alert.accept();
-				System.out.println("First if"+error+msg);
-				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+error,"");
+				System.out.println("First if "+error+" and "+msg);
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+oWithdrawalInfo.warn,"0");
 				
 			}
+			
+			else if(error.equalsIgnoreCase(oWithdrawalInfo.message) && msg.equalsIgnoreCase(oWithdrawalInfo.fail))
+			{
+				alert.accept();
+				System.out.println("Second if "+error+" and "+msg);
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+oWithdrawalInfo.fail,"0");
+				
+			}
+		
 			else if(msg.equalsIgnoreCase(oWithdrawalInfo.message))
 			{
 				alert.accept();
-				//System.out.println("Second if"+msg);
-				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+msg,"");
+				System.out.println("third if "+error+" and "+msg);
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Pass - "+msg,"0");
 			}
 			
 			else 
 			{
 				alert.accept();
-				//System.out.println("Third if"+msg);
-				oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - Message Mismatch.."+msg,"");
+				System.out.println("4th if "+error+" and "+msg);
+				oGuruRepository.updateWithdrawalStatus(testcaseID, "Fail - Message Mismatch.."+msg,"0");
+				//NEED TO check why ZERO is needed here!!?
 			}
 		} catch(Exception Ex2)
 		{
-			String output = driver.findElement(By.xpath(".//table[@id='withdraw']/tbody/tr[1]/td/p")).getText();
-			String currentbal = driver.findElement(By.xpath(".//table[@id='withdraw']/tbody/tr[23]/td[2]")).getText();
+
+			String output = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[1]/td/p")).getText();
+			//.//table[@id='withdraw']/tbody/tr[1]/td/p
+			String currentbal = driver.findElement(By.xpath("html/body/table/tbody/tr/td/table/tbody/tr[23]/td[2]")).getText();
+			//.//table[@id='withdraw']/tbody/tr[23]/td[2]
 			
 			System.out.println(output+" with current balance: "+currentbal);
 			

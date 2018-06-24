@@ -6,6 +6,7 @@ import guru99.Interfaces.IGuruRepository;
 import guru99.Repository.ExcelRepository;
 
 import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
@@ -43,7 +44,7 @@ public class MainController {
 		}
 	}
 
-/*@Test(priority=3)
+@Test(priority=3)
 	public void EditCustomer() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when EditCustomer function is executed alone
@@ -80,7 +81,7 @@ public class MainController {
 		}
 		oGuruRepository.deleteCustidsFromDeleteCustExcel();
 	}
-*/
+
 @Test(priority=4)
 	public void AddNewAccount() throws IOException
 	{
@@ -91,15 +92,14 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(aaTestcaseID=1;aaTestcaseID<27;aaTestcaseID++)
+		for(aaTestcaseID=1;aaTestcaseID<9;aaTestcaseID++) //27
 		{
 			AccountController oAccountController = new AccountController(aaTestcaseID,driver,oGuruRepository);
 			oAccountController.addNewAcct();
 		}
 	}
 
-/*
-	@Test(priority=5)
+@Test(priority=5)
 	public void EditAccount() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when EditAccount function is executed alone
@@ -117,7 +117,7 @@ public class MainController {
 		oGuruRepository.deleteAcctnumsFromEditAcctExcel();
 	}
 
-/*@Test(priority=6)
+@Test(priority=6)
 	public void DeleteAccount() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when DeleteAccount function is executed alone
@@ -165,34 +165,34 @@ public class MainController {
 		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		//oLoginLogoutController.Login();
 		
-		for(deTestcaseID=1;deTestcaseID<20;deTestcaseID++)
+		for(deTestcaseID=1;deTestcaseID<9;deTestcaseID++) //20
 		{
-			TransactionController oTransactionController = new TransactionController(deTestcaseID,driver,oGuruRepository);
-			oTransactionController.deposit();
+				TransactionController oTransactionController = new TransactionController(deTestcaseID,driver,oGuruRepository);
+				oTransactionController.deposit();
 		}
 		
 		//oGuruRepository.deleteAcctnumAmountFromDepositExcel();
 	}
-/*
+*/
 @Test(priority=8)
 	public void Withdrawal() throws IOException
 	{
-		//Line numbers 1,4 and 5 are to be uncommented when Withdrawal function is executed alone
-		//int lTestcaseID = 1;
+		//Line numbers 1,5 and 6 are to be uncommented when Withdrawal function is executed alone
+		int lTestcaseID = 1;
 		int wTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		//oLoginLogoutController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
-		for(wTestcaseID=1;wTestcaseID<2;wTestcaseID++)
+		for(wTestcaseID=10;wTestcaseID<21;wTestcaseID++)
 		{
-			if(wTestcaseID==14)
-				continue;
 			TransactionController oTransactionController = new TransactionController(wTestcaseID,driver,oGuruRepository);
 			oTransactionController.withdrawal();
 		}
+		
+		oGuruRepository.deleteAcctnumAmountFromWithdrawalExcel();
 	}
-
+/*
 @Test(priority=9)
 	public void FundTransfer() throws IOException
 	{
