@@ -55,6 +55,7 @@ public interface IGuruRepository {
 	
 	public FundTransferInfo readFundTransferInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateFundTransferStatus(int TestcaseID,String status) throws IOException;
+	public void deleteAcctnumsFromFundTransferExcel() throws IOException;
 	
 	public BalEnquiryInfo readBalEnquiryInfo(int TestcaseID,WebDriver Driver) throws IOException;
 	public void updateBalEnquiryStatus(int TestcaseID,String status,String balance) throws IOException;

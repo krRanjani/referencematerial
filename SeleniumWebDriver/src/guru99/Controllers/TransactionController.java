@@ -145,19 +145,6 @@ public class TransactionController {
 			
 			Alert alert = driver.switchTo().alert();
 			String msg = alert.getText();
-
-			System.out.println("Alert says "+msg);
-			System.out.println("*******************");
-			System.out.println("Excel says "+oWithdrawalInfo.message);
-			System.out.println("Excel  warning says "+oWithdrawalInfo.warn);
-			System.out.println("Excel failure says "+oWithdrawalInfo.fail);
-
-			
-//			if(msg.equalsIgnoreCase("Account does not exist"))
-//			{
-//				alert.accept();
-//				System.out.println("SAME ERROR");
-//			}
 			
 			if(error.equalsIgnoreCase(oWithdrawalInfo.message) && msg.equalsIgnoreCase(oWithdrawalInfo.warn))
 			{
@@ -247,34 +234,34 @@ public class TransactionController {
 			
 			Alert alert = driver.switchTo().alert();
 			String msg = alert.getText();
+			System.out.println("Alert says "+msg);
 			
 			if(error.equalsIgnoreCase(oFundTransferInfo.message) && msg.equalsIgnoreCase(oFundTransferInfo.warn))
 			{
 				alert.accept();
-				System.out.println("First if"+error+msg);
+				System.out.println("First if"+error+" and"+msg);
 				oGuruRepository.updateFundTransferStatus(testcaseID, "Pass - "+error);
 				
 			}
 			else if(msg.equalsIgnoreCase(oFundTransferInfo.message))
 			{
 				alert.accept();
-				//System.out.println("Second if"+msg);
+				System.out.println("Second if "+msg);
 				oGuruRepository.updateFundTransferStatus(testcaseID, "Pass - "+msg);
 			}
 			
 			else 
 			{
 				alert.accept();
-				//System.out.println("Third if"+msg);
+				System.out.println("Third if "+msg);
 				oGuruRepository.updateFundTransferStatus(testcaseID, "Fail - Message Mismatch.."+msg);
 			}
 		} catch(Exception Ex3)
 		{
-			String output = driver.findElement(By.xpath(".//table[@id='layout']/tbody/tr[1]/td/p")).getText();
-			//String currentbal = driver.findElement(By.xpath(".//table[@id='withdraw']/tbody/tr[23]/td[2]")).getText();
+			String output = driver.findElement(By.xpath("html/body/table/tbody/tr[1]/td/p")).getText();
+			//.//table[@id='layout']/tbody/tr[1]/td/p
 			
 			System.out.println(output);
-			
 			
 				if(output.equalsIgnoreCase(oFundTransferInfo.message))
 					

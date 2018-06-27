@@ -9,7 +9,7 @@ public class FundTransferInfo {
 	public String description;
 	public String message;
 
-	public String warn= "please fill all fields";
+	public String warn= "Please fill all fields";
 	//public String fail = "could not be updated!!";
 
 }

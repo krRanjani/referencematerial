@@ -173,7 +173,7 @@ public class MainController {
 		
 		//oGuruRepository.deleteAcctnumAmountFromDepositExcel();
 	}
-*/
+
 @Test(priority=8)
 	public void Withdrawal() throws IOException
 	{
@@ -184,7 +184,7 @@ public class MainController {
 		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		oLoginLogoutController.Login();
 		
-		for(wTestcaseID=10;wTestcaseID<21;wTestcaseID++)
+		for(wTestcaseID=1;wTestcaseID<21;wTestcaseID++)
 		{
 			TransactionController oTransactionController = new TransactionController(wTestcaseID,driver,oGuruRepository);
 			oTransactionController.withdrawal();
@@ -192,25 +192,28 @@ public class MainController {
 		
 		oGuruRepository.deleteAcctnumAmountFromWithdrawalExcel();
 	}
-/*
+*/
+
 @Test(priority=9)
 	public void FundTransfer() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when FundTransfer function is executed alone
-		//int lTestcaseID = 1;
+		int lTestcaseID = 1;
 		int fTestcaseID;
 		IGuruRepository oGuruRepository = new ExcelRepository();
-		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
-		//oLoginLogoutController.Login();
+		LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
+		oLoginLogoutController.Login();
 		
-		for(fTestcaseID=1;fTestcaseID<2;fTestcaseID++)
+		for(fTestcaseID=1;fTestcaseID<28;fTestcaseID++)
 		{
 			TransactionController oTransactionController = new TransactionController(fTestcaseID,driver,oGuruRepository);
 			oTransactionController.fundTransfer();
 		}
+		
+		oGuruRepository.deleteAcctnumsFromFundTransferExcel();
 	}
 
-@Test(priority=10)
+/*@Test(priority=10)
 	public void MiniStatement() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when MiniStatement function is executed alone

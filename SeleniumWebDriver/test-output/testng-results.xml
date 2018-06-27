@@ -2,15 +2,15 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2018-06-24T02:08:29Z" name="Default suite" finished-at="2018-06-24T02:09:08Z" duration-ms="39151">
+  <suite started-at="2018-06-26T19:09:27Z" name="Default suite" finished-at="2018-06-26T19:11:34Z" duration-ms="127230">
     <groups>
     </groups>
-    <test started-at="2018-06-24T02:08:29Z" name="Default test" finished-at="2018-06-24T02:09:08Z" duration-ms="39151">
+    <test started-at="2018-06-26T19:09:27Z" name="Default test" finished-at="2018-06-26T19:11:34Z" duration-ms="127230">
       <class name="guru99.Controllers.MainController">
-        <test-method signature="Withdrawal()[pri:8, instance:guru99.Controllers.MainController@578524c3]" started-at="2018-06-24T02:08:29Z" name="Withdrawal" finished-at="2018-06-24T02:09:08Z" duration-ms="39125" status="PASS">
+        <test-method signature="FundTransfer()[pri:9, instance:guru99.Controllers.MainController@64c2b546]" started-at="2018-06-26T19:09:27Z" name="FundTransfer" finished-at="2018-06-26T19:11:34Z" duration-ms="127206" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Withdrawal -->
+        </test-method> <!-- FundTransfer -->
       </class> <!-- guru99.Controllers.MainController -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
