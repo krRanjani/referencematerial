@@ -288,7 +288,7 @@ public class ExcelRepository implements IGuruRepository {
 			else if(TestcaseID>15 || custid == " ")
 				System.out.println("Nothing to update in DeleteCust sheet");
 			
-			/*//Updating the NewAcct sheet with newly created customer ids
+			/*//Updating the NewAcct sheet with newly created customer ids  NEED TO RUN ONCE for checking the correctness of the method
 			if(colcnt>=8 && custid !=" ")
 			{		//System.out.println("Customer id is "+custid);		
 					for(int i=1;i<=13;i++)
@@ -677,32 +677,32 @@ public class ExcelRepository implements IGuruRepository {
 		
 		int colmcnt,colcnt,colucnt,columcount,colmcount,colncount;
 		
-		if(TestcaseID<=12)
+		if(TestcaseID<=12) //EditAcct sheet
 			colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
 			colmcnt=0;
 			
-		if(TestcaseID<=20)
+		if(TestcaseID<=20) //DeleteAcct sheet
 			colcnt = sh2.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
 			colcnt=0;
 		
-		if(TestcaseID<=19)
+		if(TestcaseID<=19) //Deposit sheet
 			colucnt = sh3.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
 			colucnt=0;
 		
-		if(TestcaseID<=8)
+		if(TestcaseID<=8) //BalEnquiry sheet
 			columcount = sh4.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
 			columcount=0;
 		
-		if(TestcaseID<=8)
+		if(TestcaseID<=8) //Withdrawal sheet
 			colmcount = sh5.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
 			colmcount=0;
 		
-		if(TestcaseID<=7)
+		if(TestcaseID<=7) //FundTransfer sheet
 			colncount = sh6.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
 			colncount=0;
@@ -807,7 +807,7 @@ public class ExcelRepository implements IGuruRepository {
 			}
 			  
 			//Updating the Withdrawal sheet with newly created account ids
-			  if(colucnt>=9 && TestcaseID<=8)
+			  if(colmcount>=9 && TestcaseID<=8)
 			{
 				for(int i=1;i<=8;i++)
 				{
@@ -828,7 +828,7 @@ public class ExcelRepository implements IGuruRepository {
 			//Updating the fund transfer sheet with newly created account ids
 			
 			//Here for loop with 2 variables is used as we need to have data for payersacctnum and payeesacctnum fields in the same rows.
-			  if(colucnt>=8 && TestcaseID<=8)
+			  if(colncount>=8 && TestcaseID<=8)
 			{
 				for(int i=1,j=8;i<=8 && j>=1;i++,j--)
 				{
@@ -1189,7 +1189,7 @@ public class ExcelRepository implements IGuruRepository {
 	    
 	    int colmcnt;
 		
-		if(TestcaseID<=20)
+		if(TestcaseID<=20) //Withdrawal sheet
 			colmcnt = sh1.getRow(TestcaseID).getPhysicalNumberOfCells();
 		else
 			colmcnt=0;
