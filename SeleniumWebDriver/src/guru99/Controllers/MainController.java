@@ -16,18 +16,18 @@ public class MainController {
 	
 	WebDriver driver = new ChromeDriver();
 
-/*@Test(priority=1)
+@Test(priority=1)
   public void Login() throws IOException 
  {
 	int lTestcaseID;
-	for(lTestcaseID=1;lTestcaseID<8;lTestcaseID++)
+	for(lTestcaseID=1;lTestcaseID<2;lTestcaseID++)
 	{
 	IGuruRepository oGuruRepository = new ExcelRepository();
 	LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository); 
 	oLoginLogoutController.Login();
 	}
  }
- 
+/* 
 @Test(priority=2)
 	public void AddNewCustomer() throws IOException
 	{
@@ -192,7 +192,7 @@ public class MainController {
 		
 		oGuruRepository.deleteAcctnumAmountFromWithdrawalExcel();
 	}
-*/
+
 
 @Test(priority=9)
 	public void FundTransfer() throws IOException
@@ -212,8 +212,8 @@ public class MainController {
 		
 		oGuruRepository.deleteAcctnumsFromFundTransferExcel();
 	}
-
-/*@Test(priority=10)
+*/
+@Test(priority=10,invocationCount=2)
 	public void MiniStatement() throws IOException
 	{
 		//Line numbers 1,4 and 5 are to be uncommented when MiniStatement function is executed alone
@@ -223,13 +223,13 @@ public class MainController {
 		//LoginLogoutController oLoginLogoutController = new LoginLogoutController(lTestcaseID,driver,oGuruRepository);
 		//oLoginLogoutController.Login();
 		
-		for(mTestcaseID=1;mTestcaseID<2;mTestcaseID++)
+		for(mTestcaseID=1;mTestcaseID<3;mTestcaseID++)
 		{
 			TransactionController oTransactionController = new TransactionController(mTestcaseID,driver,oGuruRepository);
 			oTransactionController.miniStatement();
-		}
 	}
-
+	}
+/*
 @Test(priority=11)
 	public void CustomizedStatement() throws IOException
 	{

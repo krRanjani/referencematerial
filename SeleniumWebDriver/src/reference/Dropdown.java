@@ -24,7 +24,7 @@ public class Dropdown {
 	  driver.manage().window().maximize();
   }
   
-  @Test(priority=1)
+  @Test(priority=1,invocationCount=2)
   public void dropdown1() 
   {
 	 Select days = new Select(driver.findElement(By.id("select-demo")));

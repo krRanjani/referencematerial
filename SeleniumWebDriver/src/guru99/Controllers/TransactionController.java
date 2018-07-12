@@ -362,8 +362,8 @@ public class TransactionController {
 			}
 		}catch(Exception Ex5)
 		{
-			String transmsg = driver.findElement(By.xpath(".//table[@id='layout']/tbody/tr[1]/td/p")).getText();
-			
+			String transmsg = driver.findElement(By.xpath("html/body/table/tbody/tr[1]/td/p")).getText();
+			//.//table[@id='layout']/tbody/tr[1]/td/p
 			
 			if(transmsg.equalsIgnoreCase(oBankStatementInfo.Mmessage+": "+oBankStatementInfo.Macctnum))
 				oGuruRepository.updateBankStatementStatus(testcaseID, "Pass");

@@ -16,7 +16,7 @@ public class Sampleguru {
 		WebDriver driver = new ChromeDriver();
 		driver.get("http://demo.guru99.com/V5/");
 		driver.manage().window().maximize();
-		driver.findElement(By.name("uid")).sendKeys("mngr137461");
+		driver.findElement(By.name("uid")).sendKeys("mngr142473");
 		driver.findElement(By.name("password")).sendKeys("Guru@2018");
 		driver.findElement(By.name("btnLogin")).click();
 		driver.findElement(By.xpath(".//ul[@class='menusubnav']/li[8]/a")).click();

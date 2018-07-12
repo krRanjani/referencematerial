@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2018-06-26T19:09:27Z" name="Default suite" finished-at="2018-06-26T19:11:34Z" duration-ms="127230">
+  <suite started-at="2018-07-12T12:53:53Z" name="Default suite" finished-at="2018-07-12T12:54:17Z" duration-ms="23369">
     <groups>
     </groups>
-    <test started-at="2018-06-26T19:09:27Z" name="Default test" finished-at="2018-06-26T19:11:34Z" duration-ms="127230">
+    <test started-at="2018-07-12T12:53:53Z" name="Default test" finished-at="2018-07-12T12:54:17Z" duration-ms="23369">
       <class name="guru99.Controllers.MainController">
-        <test-method signature="FundTransfer()[pri:9, instance:guru99.Controllers.MainController@64c2b546]" started-at="2018-06-26T19:09:27Z" name="FundTransfer" finished-at="2018-06-26T19:11:34Z" duration-ms="127206" status="PASS">
+        <test-method signature="Login()[pri:1, instance:guru99.Controllers.MainController@61edc883]" started-at="2018-07-12T12:53:53Z" name="Login" finished-at="2018-07-12T12:54:10Z" duration-ms="16639" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- FundTransfer -->
+        </test-method> <!-- Login -->
+        <test-method signature="MiniStatement()[pri:10, instance:guru99.Controllers.MainController@61edc883]" started-at="2018-07-12T12:54:10Z" name="MiniStatement" finished-at="2018-07-12T12:54:14Z" duration-ms="3802" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MiniStatement -->
+        <test-method signature="MiniStatement()[pri:10, instance:guru99.Controllers.MainController@61edc883]" started-at="2018-07-12T12:54:14Z" name="MiniStatement" finished-at="2018-07-12T12:54:17Z" duration-ms="2893" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MiniStatement -->
       </class> <!-- guru99.Controllers.MainController -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

@@ -11,6 +11,6 @@ public class BankStatementInfo {
 	public String numoftrans;
 	public String Mmessage;
 	public String Cmessage;//Transaction Details for Account No
-	public String warn= "please fill all fields";
+	public String warn= "Please fill all mandotary fields";
 
 }

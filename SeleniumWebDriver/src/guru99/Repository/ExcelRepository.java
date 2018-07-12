@@ -1719,7 +1719,7 @@ public class ExcelRepository implements IGuruRepository {
         String result2 = "Test case number:%d having %s,%s,%s,%s,%s,%s";
 
 		System.out.println(String.format(result1, testcaseID,oBankStatementInfo.Macctnum,oBankStatementInfo.Mmessage));
-		System.out.println(String.format(result2, testcaseID,oBankStatementInfo.Cacctnum,oBankStatementInfo.fromdate,oBankStatementInfo.todate,oBankStatementInfo.mintransvalue,oBankStatementInfo.numoftrans,oBankStatementInfo.Cmessage));
+		//System.out.println(String.format(result2, testcaseID,oBankStatementInfo.Cacctnum,oBankStatementInfo.fromdate,oBankStatementInfo.todate,oBankStatementInfo.mintransvalue,oBankStatementInfo.numoftrans,oBankStatementInfo.Cmessage));
 
 		return oBankStatementInfo;
 	}
